@@ -2,7 +2,10 @@ import {config} from 'dotenv'
 config();
 
 
-export function fileConfig(){
-    const PORT =  process.env.config;
+function fileConfig(){
+    return {
+        PORT: process.env.PORT || 3000,
+    }
 }
 
+export {fileConfig};
