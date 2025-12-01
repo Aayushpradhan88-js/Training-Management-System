@@ -1,9 +1,10 @@
 import app from "./server/src/app";
+import { fileConfig } from "./server/src/config/config";
 
 function startServer() {
-    const PORT = 3000;
-    app.listen(PORT, () => {
-        console.log(`SYSTEM SERVER IS RUNNING ON PORT: ${PORT}`);
+    const port = fileConfig.PORT;
+    app.listen(port, () => {
+        console.log(`SYSTEM SERVER IS RUNNING ON PORT: ${port}`);
     });
 };
 
