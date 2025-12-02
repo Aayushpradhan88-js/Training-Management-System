@@ -15,7 +15,8 @@
     "express": "^5.1.0",
     "mysql2": "^3.15.3",
     "sequelize": "^6.37.7",
-    "sequelize-typescript": "^2.1.6"
+    "sequelize-typescript": "^2.1.6",
+    "tsc": "^2.0.4"
   },
   "devDependencies": {
     "@types/express": "^5.0.5",

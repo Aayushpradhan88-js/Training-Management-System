@@ -1,6 +1,6 @@
 //DATABASE CONNECTION CODE
 
-import { Sequelize } from 'sequelize'
+import { Sequelize } from 'sequelize-typescript'
 import fileConfig from '../config/config.ts'
 
 const config = fileConfig();
@@ -11,7 +11,8 @@ const sequelizeDB = new Sequelize({
     password: config.DB_PASSWORD,
     host: config.DB_HOST,
     port: Number(config.DB_PORT),
-    dialect: "mysql"
+    dialect: "mysql",
+    models: [__dirname + '/models']
 });
 
 sequelizeDB.authenticate()
@@ -20,5 +21,12 @@ sequelizeDB.authenticate()
     }).catch((error) => {
         console.error("authentication failed", error.stack);
     });
+
+sequelizeDB.sync({ force: false })
+.then(() => {
+    console.log("migration successfull🎉🎉");
+}).catch((error) => {
+    console.error("migration failed😭😭", error.stack);
+})
 
 export default sequelizeDB;
