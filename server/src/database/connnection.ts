@@ -15,6 +15,7 @@ const sequelizeDB = new Sequelize({
     models: [__dirname + '/models']
 });
 
+//authentication
 sequelizeDB.authenticate()
     .then(() => {
         console.log("authentication completed");
@@ -22,11 +23,12 @@ sequelizeDB.authenticate()
         console.error("authentication failed", error.stack);
     });
 
+//migration
 sequelizeDB.sync({ force: false })
-.then(() => {
-    console.log("migration successfull🎉🎉");
-}).catch((error) => {
-    console.error("migration failed😭😭", error.stack);
-})
+    .then(() => {
+        console.log("migration successfull🎉🎉");
+    }).catch((error) => {
+        console.error("migration failed😭😭", error.stack);
+    })
 
 export default sequelizeDB;
