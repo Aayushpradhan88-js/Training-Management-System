@@ -1,12 +1,19 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript'
+import { Table, Column, Model, DataType, PrimaryKey } from 'sequelize-typescript'
 
 @Table ({
     tableName: 'users',
     modelName: 'User',
     timestamps: true
-});
+})
 
 class User extends Model {
+    @Column ({
+        primarykey: true,
+        type: DataType.UUID, //FOR Random unique id 
+        default: DataType.UUIDV4
+    })
+    declare id: string
+
     @Column ({
         type: DataType.STRING
     })
