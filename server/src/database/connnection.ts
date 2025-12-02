@@ -5,20 +5,20 @@ import fileConfig from '../config/config.ts'
 
 const config = fileConfig();
 
-const sequalizeDB = new Sequelize({
+const sequelizeDB = new Sequelize({
     database: config.DB_NAME,
-    username: config.DB_Username,
-    password: config.DB_Password,
-    host: Number(config.DB_Port),
-    port: Number(config.DB_Port),
+    username: config.DB_USERNAME,
+    password: config.DB_PASSWORD,
+    host: config.DB_HOST,
+    port: Number(config.DB_PORT),
     dialect: "mysql"
 });
 
-sequalizeDB.authenticate()
+sequelizeDB.authenticate()
     .then(() => {
         console.log("authentication completed");
     }).catch((error) => {
-        console.error("auhentication failed", error.stack);
+        console.error("authentication failed", error.stack);
     });
 
-export default sequalizeDB;
+export default sequelizeDB;

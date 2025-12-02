@@ -2,9 +2,9 @@
 
 import app from "./src/app.ts"
 import fileConfig from "./src/config/config.ts";
-import sequalizeDB from "./src/database/connnection.ts";
+import sequelizeDB from "./src/database/connnection.ts";
 
-sequalizeDB;
+sequelizeDB;
 
 function startServer() {
     const port = fileConfig().PORT;
