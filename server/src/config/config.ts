@@ -14,4 +14,4 @@ function fileConfig(){
     };
 };
 
-export {fileConfig};
+export default fileConfig;

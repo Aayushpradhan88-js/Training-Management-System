@@ -1,7 +1,7 @@
 //Server file (main file)
 
 import app from "./src/app.ts"
-import { fileConfig } from "./src/config/config.ts";
+import fileConfig from "./src/config/config.ts";
 
 function startServer() {
     const port = fileConfig().PORT;

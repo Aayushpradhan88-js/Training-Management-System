@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize'
-import { fileConfig } from '../config/config.ts'
+import fileConfig from '../config/config.ts'
 
-const schema = new Sequelize({
+const sequalizeDB = new Sequelize({
     database: fileConfig().dbName,
     username: fileConfig().dbUsername,
     password: fileConfig().dbPassword,
@@ -9,3 +9,12 @@ const schema = new Sequelize({
     dialect: "mysql",
     port: Number(fileConfig().dbPort),
 });
+
+sequalizeDB.authenticate()
+    .then(() => {
+        console.log("authentication completed");
+    }).catch((error) => {
+        console.error("auhentication failed", error.stack);
+    });
+
+export default sequalizeDB;
