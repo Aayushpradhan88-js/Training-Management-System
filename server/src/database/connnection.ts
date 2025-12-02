@@ -2,7 +2,6 @@
 
 import { Sequelize } from 'sequelize-typescript'
 import fileConfig from '../config/config.ts'
-
 const config = fileConfig();
 
 const sequelizeDB = new Sequelize({
@@ -12,7 +11,7 @@ const sequelizeDB = new Sequelize({
     host: config.DB_HOST,
     port: Number(config.DB_PORT),
     dialect: "mysql",
-    models: [__dirname + '/models'] //getting model directory 
+    models: [__dirname + '/models'] //path to models
 });
 
 //authentication
@@ -24,7 +23,7 @@ sequelizeDB.authenticate()
     });
 
 //migration
-sequelizeDB.sync({ force: false })
+sequelizeDB.sync({ alter: false})
     .then(() => {
         console.log("migration successfull🎉🎉");
     }).catch((error) => {

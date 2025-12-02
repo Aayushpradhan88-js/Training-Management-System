@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, PrimaryKey } from 'sequelize-typescript'
+import { Table, Column, Model, DataType} from 'sequelize-typescript'
 
 @Table ({
     tableName: 'users',
@@ -8,10 +8,10 @@ import { Table, Column, Model, DataType, PrimaryKey } from 'sequelize-typescript
 
 class User extends Model {
     @Column ({
-        primarykey: true,
+        primaryKey : true,
         type: DataType.UUID, //FOR Random unique id 
         default: DataType.UUIDV4
-    })
+    })  
     declare id: string
 
     @Column ({
