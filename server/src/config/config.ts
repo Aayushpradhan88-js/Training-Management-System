@@ -3,14 +3,14 @@
 import {config} from 'dotenv'
 config();
 
-function fileConfig(){
+function fileConfig() {
     return {
         PORT: process.env.PORT || 3000,
-        dbName:process.env.DB_NAME,
-        dbUsername:process.env.DB_USERNAME,
-        dbPassword:process.env.DB_PASSWORD,
-        dbHost:process.env.DB_HOST,
-        dbPort:process.env.DB_PORT
+        DB_NAME:process.env.DB_NAME,
+        DB_Username:process.env.DB_USERNAME,
+        DB_Password:process.env.DB_PASSWORD,
+        DB_Host:process.env.DB_HOST,
+        DB_Port:process.env.DB_PORT
     };
 };
 
