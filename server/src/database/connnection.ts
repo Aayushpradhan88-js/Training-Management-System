@@ -12,7 +12,7 @@ const sequelizeDB = new Sequelize({
     host: config.DB_HOST,
     port: Number(config.DB_PORT),
     dialect: "mysql",
-    models: [__dirname + '/models']
+    models: [__dirname + '/models'] //getting model directory 
 });
 
 //authentication
