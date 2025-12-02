@@ -1,9 +1,15 @@
 //DATABASE CONNECTION CODE
 
 import { Sequelize } from 'sequelize-typescript'
-import fileConfig from '../config/config.ts'
-const config = fileConfig();
+import fileConfig from '../config/config'
+import User from './models/userModel';
+// import { fileURLToPath } from 'url'
+// import { dirname, join } from 'path'
 
+// const __filename = fileURLToPath(import.meta.url)
+// const __dirname = dirname(__filename)
+
+const config = fileConfig();
 const sequelizeDB = new Sequelize({
     database: config.DB_NAME,
     username: config.DB_USERNAME,
@@ -11,7 +17,8 @@ const sequelizeDB = new Sequelize({
     host: config.DB_HOST,
     port: Number(config.DB_PORT),
     dialect: "mysql",
-    models: [__dirname + '/models'] //path to models
+//    models: [join(__dirname, 'models')] //path to models
+models: [User]
 });
 
 //authentication

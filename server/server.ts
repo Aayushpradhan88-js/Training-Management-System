@@ -1,8 +1,8 @@
 //Server file (main file)
 
-import app from "./src/app.ts"
-import fileConfig from "./src/config/config.ts";
-import sequelizeDB from "./src/database/connnection.ts";
+import app from "./src/app"
+import fileConfig from "./src/config/config";
+import sequelizeDB from "./src/database/connnection";
 
 sequelizeDB;
 
