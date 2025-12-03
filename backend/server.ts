@@ -1,6 +1,7 @@
 import app from "./src/app.ts";
 import { config } from "dotenv";
 config();
+import  "../backend/src/database/connection.ts"
 
 function startServer() {
     const port = 3000;

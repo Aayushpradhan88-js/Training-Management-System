@@ -7,9 +7,9 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
-    "target": "esnext",
-    "types": [],
+    "module": "NodeNext",
+    "target": "ESNext",
+    "types": ["node"],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -46,6 +46,11 @@
     "emitDecoratorMetadata": true,
 
     "strictPropertyInitialization": false, // optional but recommended for sequelize
-    "esModuleInterop": true
+    "esModuleInterop": true,
+
+    //.ts extenstion fixing code
+    "emitDeclarationOnly": true,
+    "allowImportingTsExtensions": true
+    
   }
 }
