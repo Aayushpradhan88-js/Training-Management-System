@@ -40,5 +40,12 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
+
+    //Decorator Fixing code
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    "strictPropertyInitialization": false, // optional but recommended for sequelize
+    "esModuleInterop": true
   }
 }
