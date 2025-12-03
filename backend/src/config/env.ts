@@ -1,3 +1,5 @@
+import { config } from "dotenv"
+config()
 
 const SERVER_PORT = parseInt(process.env.PORT || '6000')
 const DB_NAME = process.env.DB_NAME as string
