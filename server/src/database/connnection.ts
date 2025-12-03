@@ -1,8 +1,8 @@
 //DATABASE CONNECTION CODE
 
 import { Sequelize } from 'sequelize-typescript'
-import fileConfig from '../config/config'
-import User from './models/userModel';
+import fileConfig from '../config/config.ts'
+import User from './models/userModel.ts';
 // import { fileURLToPath } from 'url'
 // import { dirname, join } from 'path'
 
