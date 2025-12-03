@@ -7,7 +7,8 @@ const sequelize = new Sequelize({
     password: DB_PASSWORD,
     host: DB_HOST,
     port: DB_PORT,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    models: [__dirname + '/models']
 })
 
 sequelize.authenticate()
@@ -15,5 +16,13 @@ sequelize.authenticate()
         console.log("authentication complete")
     }).catch((error) => {
         console.log("authentication failed")
-    })
+    });
 
+sequelize.sync({force: true})
+.then(() => {
+    console.log("database migration complete")
+}) .catch ((error) => {
+    console.error("database migration failed", error.message)
+})
+
+export default sequelize;
