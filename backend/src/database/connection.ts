@@ -5,12 +5,15 @@ const sequelize = new Sequelize({
     database: DB_NAME,
     username: DB_USERNAME,
     password: DB_PASSWORD,
-    host:  DB_HOST,
+    host: DB_HOST,
     port: DB_PORT,
     dialect: 'mysql'
 })
 
 sequelize.authenticate()
-.then(() => {
-    
-})
+    .then(() => {
+        console.log("authentication complete")
+    }).catch((error) => {
+        console.log("authentication failed")
+    })
+
