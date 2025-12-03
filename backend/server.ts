@@ -1,4 +1,6 @@
 import app from "./src/app.ts";
+import { config } from "dotenv";
+config();
 
 function startServer() {
     const port = 3000;
