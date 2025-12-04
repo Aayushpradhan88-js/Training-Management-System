@@ -1,5 +1,5 @@
-import app from "./src/app.ts";
-import { DB_PORT } from "./src/config/env.ts";
+import app from "./src/app.js";
+import { DB_PORT } from "./src/config/env.js";
 import "./src/database/connection.ts";
 import { config } from "dotenv"
 config()
