@@ -1,3 +1,5 @@
+//CONFIGURATION FILE
+
 import { config } from "dotenv"
 config();
 

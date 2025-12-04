@@ -1,3 +1,5 @@
+//DATABASE TABLE CREATION FILE
+
 import { Table, Column, Model, DataType } from 'sequelize-typescript'
 
 @Table({
@@ -34,6 +36,3 @@ export class User extends Model {
     })
     declare roles: string
 }
-
-
-// export { User };

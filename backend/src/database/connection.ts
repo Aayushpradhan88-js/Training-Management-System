@@ -1,3 +1,5 @@
+//DATABASE CONNECTION FILE
+
 import 'reflect-metadata';
 import { Sequelize } from "sequelize-typescript"
 import { DB_NAME, DB_USERNAME, DB_PASSWORD, DB_HOST, DB_PORT } from "../config/env.js"
