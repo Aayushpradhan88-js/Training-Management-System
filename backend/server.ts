@@ -1,6 +1,6 @@
 import app from "./src/app.js";
 import { DB_PORT } from "./src/config/env.js";
-import "./src/database/connection.ts";
+import "./src/database/connection.js";
 import { config } from "dotenv"
 config()
 
