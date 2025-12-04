@@ -22,11 +22,8 @@ const sequelize = new Sequelize({
     host: DB_HOST,
     port: DB_PORT,
     dialect: 'mysql',
-    models: [path.join(__dirname, "../models")],
-    logging: false // Set to console.log to see SQL queries
-})
-
-console.log([path.join(__dirname, "../models")])
+    models: [path.join(__dirname, "/models")],
+});
 
 sequelize.authenticate()
     .then(() => {
@@ -35,11 +32,11 @@ sequelize.authenticate()
         console.log("authentication failed", error.message)
     });
 
-sequelize.sync({alter: true})
-.then(() => {
-    console.log("database migration complete")
-}) .catch ((error) => {
-    console.error("database migration failed", error.message)
-})
+sequelize.sync({ alter: false })
+    .then(() => {
+        console.log("database migration complete")
+    }).catch((error) => {
+        console.error("database migration failed", error.message)
+    })
 
 export default sequelize;
