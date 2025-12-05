@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { User } from '../../../database/models/userModel';
-import { Console } from 'console';
+import { User } from '../../../database/models/userModel'
+import bcrypt from 'bcrypt'
 
 //Register
 
@@ -19,10 +19,12 @@ class AuthController {
             })
         };
 
+        const hashedPassword = await bcrypt.hash(password, 30);
+
         const data = await User.create({
             username,
             email,
-            password
+            password: hashedPassword
         });
         console.log("user data", data);
 
@@ -32,5 +34,8 @@ class AuthController {
         })
     }
 };
+
+//login 
+
 
 export default AuthController;
