@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { User } from '../../../database/models/userModel'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonweb'
 
 //Register
 
@@ -51,18 +52,20 @@ class AuthController {
         };
 
         const data = await User.findAll({ where: { email } });
-        if(!data){
+        if (!data) {
             return res.status(401).json({
                 message: "Invalid email or password"
             });
         };
 
-        const isComparedPassword = bcrypt.compare(password, data[0]?.password);
-        if(!isComparedPassword){
-return res.status(401).json({
+        const isComparedPassword = await bcrypt.compare(password, data[0]?.password);
+        if (!isComparedPassword) {
+            return res.status(401).json({
                 message: "Invalid email or password"
             });
-        }
+        };
+
+        const generateToken =
     }
 };
 
