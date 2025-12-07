@@ -5,13 +5,14 @@ import bcrypt from 'bcrypt'
 //Register
 
 class AuthController {
+    //register
     static async register(req: Request, res: Response) {
-        if(req.body === undefined){
+        if (req.body === undefined) {
             return res.status(400).json({
                 message: "No data found!!"
             });
         };
-        
+
         const { username, email, password } = req.body;
         if (!username || !email || !password) {
             return res.status(401).json({
@@ -33,9 +34,38 @@ class AuthController {
             datas: data
         })
     }
+
+    //login 
+    static async login(req: Request, res: Response) {
+        if (req.body === undefined) {
+            return res.status(400).json({
+                message: "no data"
+            })
+        };
+
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(401).json({
+                message: "All fields are required!"
+            });
+        };
+
+        const data = await User.findAll({ where: { email } });
+        if(!data){
+            return res.status(401).json({
+                message: "Invalid email or password"
+            });
+        };
+
+        const isComparedPassword = bcrypt.compare(password, data[0]?.password);
+        if(!isComparedPassword){
+return res.status(401).json({
+                message: "Invalid email or password"
+            });
+        }
+    }
 };
 
-//login 
 
 
 export default AuthController;
