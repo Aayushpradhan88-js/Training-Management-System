@@ -10,6 +10,8 @@ const createInstitute = (req:Request, res:Response) => {
         return res.status(400).json({
             message: "Provide all the required fields!!"
         })
-    }
+    };
+
+    
 
 }
