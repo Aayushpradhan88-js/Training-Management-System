@@ -43,7 +43,7 @@ class AuthController {
                 message: "no data"
             })
         };
-        console.log(req.body)
+        // console.log(req.body)
 
         const { email, password } = req.body;
         if (!email || !password) {
@@ -58,15 +58,15 @@ class AuthController {
                 message: "Invalid email or password"
             });
         };
-        console.log("user", user);
+        // console.log("user", user);
 
         if (!user.password) {
             return res.status(401).json({
                 message: "Invalid email or password"
             });
         }
-        console.log(user.password);
-        console.log(password);
+        // console.log(user.password);
+        // console.log(password);
 
         const isComparedPassword = await bcrypt.compare(password, user.password);
         if (!isComparedPassword) {
@@ -74,21 +74,19 @@ class AuthController {
                 message: "Invalid email or password"
             });
         };
-        console.log("logged in password", isComparedPassword)
+        // console.log("logged in password", isComparedPassword)
 
-        console.log('JWT_SECRET:', JWT_SECRET);
-        console.log('JWT_EXPIRY:', JWT_EXPIRY);
-        console.log('User ID:', user.id);
+        // console.log('JWT_SECRET:', JWT_SECRET);
+        // console.log('JWT_EXPIRY:', JWT_EXPIRY);
+        // console.log('User ID:', user.id);
 
         const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
 
-        // console.log("token", jwt.sign({userId: user.id}, JWT_SECRET, {expiresIn: JWT_EXPIRY}));
-        // const token = jwt.sign({userId: user.id}, JWT_SECRET, {expiresIn: JWT_EXPIRY})
-
-        // const generateToken = jwt.sign({})
-    }
+        return res.status(200).json({
+            token,
+            message: "User loggedin successfully!!"
+        });
+    };
 };
-
-
 
 export default AuthController;
