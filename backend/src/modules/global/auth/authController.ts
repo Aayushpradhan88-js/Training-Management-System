@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import { User } from '../../../database/models/userModel'
+import { User } from '../../../database/models/userModel.js'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import { JWT_SECRET,JWT_EXPIRY } from '../../../config/env';
+import * as jwt from 'jsonwebtoken'
+import { JWT_SECRET, JWT_EXPIRY } from '../../../config/env.js';
 
 //Register
 
@@ -22,7 +22,7 @@ class AuthController {
             })
         };
 
-        const hashedPassword = await bcrypt.hash(password, 30);
+        const hashedPassword = await bcrypt.hash(password, 12);
 
         const data = await User.create({
             username,
@@ -43,6 +43,7 @@ class AuthController {
                 message: "no data"
             })
         };
+        console.log(req.body)
 
         const { email, password } = req.body;
         if (!email || !password) {
@@ -52,18 +53,20 @@ class AuthController {
         };
 
         const user = await User.findOne({ where: { email } });
-        // console.log("userdata", data[0]?.password);
         if (!user) {
             return res.status(401).json({
                 message: "Invalid email or password"
             });
         };
+        console.log("user", user);
 
-        if(user.password){
-             return res.status(401).json({
+        if (!user.password) {
+            return res.status(401).json({
                 message: "Invalid email or password"
             });
         }
+        console.log(user.password);
+        console.log(password);
 
         const isComparedPassword = await bcrypt.compare(password, user.password);
         if (!isComparedPassword) {
@@ -71,8 +74,16 @@ class AuthController {
                 message: "Invalid email or password"
             });
         };
+        console.log("logged in password", isComparedPassword)
 
-        const token = jwt.sign({userId: user.id, email: user.email}, JWT_SECRET, {JWT_EXPIRY})
+        console.log('JWT_SECRET:', JWT_SECRET);
+        console.log('JWT_EXPIRY:', JWT_EXPIRY);
+        console.log('User ID:', user.id);
+
+        const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
+
+        // console.log("token", jwt.sign({userId: user.id}, JWT_SECRET, {expiresIn: JWT_EXPIRY}));
+        // const token = jwt.sign({userId: user.id}, JWT_SECRET, {expiresIn: JWT_EXPIRY})
 
         // const generateToken = jwt.sign({})
     }

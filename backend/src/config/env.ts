@@ -9,8 +9,8 @@ const DB_USERNAME = process.env.DB_USERNAME as string
 const DB_PASSWORD = process.env.DB_PASSWORD as string
 const DB_HOST = process.env.DB_HOST as string
 const DB_PORT = Number(process.env.DB_PORT)|| 3306
-const JWT_SECRET=process.env.JWT_SECRET as string
-const JWT_EXPIRY=process.env.JWT_EXPIRY as string
+const JWT_SECRET=process.env.JWT_SECRET! as string
+const JWT_EXPIRY=process.env.JWT_EXPIRY || '5d'
 
 export {
     SERVER_PORT,
