@@ -81,7 +81,7 @@ class AuthController {
         // console.log('User ID:', user.id);
 
         const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
-
+        console.log(token);
         return res.status(200).json({
             token,
             message: "User loggedin successfully!!"
