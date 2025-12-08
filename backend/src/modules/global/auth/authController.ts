@@ -1,13 +1,14 @@
 import { Request, Response } from 'express'
 import { User } from '../../../database/models/userModel'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonweb'
+import jwt from 'jsonwebtoken'
+import { JWT_SECRET,JWT_EXPIRY } from '../../../config/env';
 
 //Register
 
 class AuthController {
     //register
-    static async register(req: Request, res: Response) {
+    static async registerUser(req: Request, res: Response) {
         if (req.body === undefined) {
             return res.status(400).json({
                 message: "No data found!!"
@@ -28,7 +29,6 @@ class AuthController {
             email,
             password: hashedPassword
         });
-        console.log("user data", data);
 
         return res.status(200).json({
             message: "user successfully registered",
@@ -37,7 +37,7 @@ class AuthController {
     }
 
     //login 
-    static async login(req: Request, res: Response) {
+    static async loginUser(req: Request, res: Response) {
         if (req.body === undefined) {
             return res.status(400).json({
                 message: "no data"
@@ -51,21 +51,30 @@ class AuthController {
             });
         };
 
-        const data = await User.findAll({ where: { email } });
-        if (!data) {
+        const user = await User.findOne({ where: { email } });
+        // console.log("userdata", data[0]?.password);
+        if (!user) {
             return res.status(401).json({
                 message: "Invalid email or password"
             });
         };
 
-        const isComparedPassword = await bcrypt.compare(password, data[0]?.password);
+        if(user.password){
+             return res.status(401).json({
+                message: "Invalid email or password"
+            });
+        }
+
+        const isComparedPassword = await bcrypt.compare(password, user.password);
         if (!isComparedPassword) {
             return res.status(401).json({
                 message: "Invalid email or password"
             });
         };
 
-        const generateToken =
+        const token = jwt.sign({userId: user.id, email: user.email}, JWT_SECRET, {JWT_EXPIRY})
+
+        // const generateToken = jwt.sign({})
     }
 };
 
