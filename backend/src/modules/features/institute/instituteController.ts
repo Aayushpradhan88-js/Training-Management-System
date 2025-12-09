@@ -23,6 +23,6 @@ const createInstitute = async (req: Request, res: Response) => {
         institutePanNumber VARCHAR(225) ,
         createdAt TIMESTAMP DEFAULT CURRENT_TIME ,
         updatedAt TIMESTAMP DEFAULT CURRENT_TIME ON UPDATE CURRENT_TIMESTAMP
-        )`)
+        )`);
 
 }
