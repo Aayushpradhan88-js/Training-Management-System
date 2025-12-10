@@ -16,7 +16,8 @@ const createInstitute = async (req: Request, res: Response) => {
     };
 
     try {
-        await sequelize.query(`CREATE TABLE IF NOT EXIST(
+        console.log("trigger 2");
+        await sequelize.query(`CREATE TABLE IF NOT EXISTS institute_table(
          id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
          instituteName VARCHAR(225) NOT NULL, 
          instituteEmail VARCHAR(225) NOT NULL, 
@@ -24,8 +25,8 @@ const createInstitute = async (req: Request, res: Response) => {
          instituteAddress VARCHAR(225) NOT NULL,
          instituteVatNumber VARCHAR(225) , 
          institutePanNumber VARCHAR(225) ,
-         createdAt TIMESTAMP DEFAULT CURRENT_TIME ,
-         updatedAt TIMESTAMP DEFAULT CURRENT_TIME ON UPDATE CURRENT_TIMESTAMP
+         createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+         updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
          )`);
 
         // make a database for institute and teacher
