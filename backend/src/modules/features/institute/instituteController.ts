@@ -25,4 +25,10 @@ const createInstitute = async (req: Request, res: Response) => {
         updatedAt TIMESTAMP DEFAULT CURRENT_TIME ON UPDATE CURRENT_TIMESTAMP
         )`);
 
+    // make a database for institute and teacher
+
+    
+    res.status(200).json({
+        message: "Institute created"
+    })
 }
