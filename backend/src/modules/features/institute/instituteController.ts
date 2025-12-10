@@ -29,6 +29,8 @@ const createInstitute = async (req: Request, res: Response) => {
          updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
          )`);
 
+        await sequelize.query(`INSERT`)
+
         // make a database for institute and teacher
 
 
