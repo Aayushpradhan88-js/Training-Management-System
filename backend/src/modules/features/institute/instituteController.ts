@@ -27,8 +27,10 @@ const createInstitute = async (req: Request, res: Response) => {
 
     // make a database for institute and teacher
 
-    
+
     res.status(200).json({
         message: "Institute created"
     })
-}
+};
+
+export {createInstitute};
