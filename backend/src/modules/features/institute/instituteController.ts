@@ -3,11 +3,11 @@ import sequelize from "../../../database/connection";
 
 
 const createInstitute = async (req: Request, res: Response) => {
-    console.log("triggered");
+    console.log("triggered institute creation code");
     const { instituteName, instituteEmail, institutePhoneNumber, instituteAddress } = req.body;
     const { instituteVatNumber } = req.body || null;
     const { institutePanNumber } = req.body || null;
-    console.log("details", instituteName, instituteEmail, institutePhoneNumber, instituteAddress)
+    // console.log("details", instituteName, instituteEmail, institutePhoneNumber, instituteAddress)
 
     if (!instituteName || !instituteEmail || !institutePhoneNumber || !instituteAddress) {
         return res.status(400).json({
@@ -16,7 +16,7 @@ const createInstitute = async (req: Request, res: Response) => {
     };
 
     try {
-        console.log("trigger 2");
+        // console.log("trigger 2");
         await sequelize.query(`CREATE TABLE IF NOT EXISTS institute_table(
          id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
          instituteName VARCHAR(225) NOT NULL, 
