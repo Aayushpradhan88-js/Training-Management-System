@@ -3,9 +3,11 @@ import sequelize from "../../../database/connection";
 
 
 const createInstitute = async (req: Request, res: Response) => {
+    console.log("triggered");
     const { instituteName, instituteEmail, institutePhoneNumber, instituteAddress } = req.body;
     const { instituteVatNumber } = req.body || null;
     const { institutePanNumber } = req.body || null;
+    console.log("details",instituteName, instituteEmail, institutePhoneNumber, instituteAddress )
 
     if (!instituteName || !instituteEmail || !institutePhoneNumber || !instituteAddress) {
         return res.status(400).json({
