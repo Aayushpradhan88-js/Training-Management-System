@@ -18,7 +18,7 @@ const sequelize = new Sequelize({
 
 sequelize.addModels([User]);
 
-console.log("✅ step 3: DB authentication started")
+console.log("✅ step 11: DB authentication started")
 sequelize.authenticate()
     .then(() => {
         console.log("authentication complete")
@@ -26,7 +26,7 @@ sequelize.authenticate()
         console.log("authentication failed", error.message)
     });
 
-console.log("✅ step 4: DB MIGRATION")
+console.log("✅ step 12: DB MIGRATION")
 sequelize.sync({ alter: false })
     .then(() => {
         console.log("database migration complete")

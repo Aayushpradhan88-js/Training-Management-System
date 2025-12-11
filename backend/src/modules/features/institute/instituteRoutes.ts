@@ -3,7 +3,7 @@ import {createInstitute} from './instituteController'
 
 const instituteRouter = express.Router();
 
-console.log("✅ step 5: Institute Route Started")
+console.log("✅ step 3: CREATED INSTITUTE ROUTER STARTED")
 instituteRouter.route("/").post(createInstitute);
 
 export default instituteRouter;
