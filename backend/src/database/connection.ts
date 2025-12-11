@@ -4,6 +4,8 @@ import 'reflect-metadata';
 import { Sequelize } from "sequelize-typescript"
 import { DB_NAME, DB_USERNAME, DB_PASSWORD, DB_HOST, DB_PORT } from "../config/env.js"
 import { User } from './models/userModel.js';
+import { config } from 'dotenv'
+config();
 
 const sequelize = new Sequelize({
     database: DB_NAME,
@@ -16,6 +18,7 @@ const sequelize = new Sequelize({
 
 sequelize.addModels([User]);
 
+console.log("✅ step 3: DB authentication started")
 sequelize.authenticate()
     .then(() => {
         console.log("authentication complete")
@@ -23,6 +26,7 @@ sequelize.authenticate()
         console.log("authentication failed", error.message)
     });
 
+console.log("✅ step 4: DB MIGRATION")
 sequelize.sync({ alter: false })
     .then(() => {
         console.log("database migration complete")
