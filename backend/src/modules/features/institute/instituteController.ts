@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import sequelize from "../../../database/connection";
+import generateInstituteRandomNumbers from "../../global/services/generateRandomNumber";
 
 
 const createInstitute = async (req: Request, res: Response) => {
@@ -16,8 +17,8 @@ const createInstitute = async (req: Request, res: Response) => {
     };
 
     try {
-        // console.log("trigger 2");
-        await sequelize.query(`CREATE TABLE IF NOT EXISTS institute_table(
+        const instituteNumber = generateInstituteRandomNumbers();
+        await sequelize.query(`CREATE TABLE IF NOT EXISTS institute_${instituteNumber}(
          id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
          instituteName VARCHAR(225) NOT NULL, 
          instituteEmail VARCHAR(225) NOT NULL, 
