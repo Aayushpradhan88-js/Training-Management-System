@@ -53,6 +53,7 @@ const createInstitute = async (req: Request, res: Response) => {
         console.log(`✅ step 9: Table institute_${instituteNumber} created`);
 
         // Step 2: Insert institute data into the new table
+        console.log(`✅ step 10: Intersting database table`);
         await sequelize.query(`
             INSERT INTO institute_${instituteNumber}(
                 instituteName,
@@ -71,8 +72,7 @@ const createInstitute = async (req: Request, res: Response) => {
                 institutePanNumber
             ]
         });
-
-        // console.log(`✓ Data inserted into institute_${instituteNumber}`);
+        console.log(`✅step 11: Data insertion complete into institute_${instituteNumber}`);
 
         // Step 3: Optionally, store institute metadata in main table
         // await sequelize.query(`
