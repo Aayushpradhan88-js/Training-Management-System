@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import sequelize from "../../../database/connection";
 import generateInstituteRandomNumbers from "../../global/services/generateRandomNumber";
 
-console.log("✅ step 4: SEQULIZE TESTING Triggered", sequelize);
-console.log("✅ step 5: GENERATE RANDOM NUMBER TESTING Triggered", generateInstituteRandomNumbers);
+console.log("✅ step 4: SEQULIZE TESTING Triggered");
+console.log("✅ step 5: GENERATE RANDOM NUMBER TESTING Triggered", generateInstituteRandomNumbers());
 
 const createInstitute = async (req: Request, res: Response) => {
     console.log("✅ step 6: Institute Creation Triggered");
@@ -17,6 +17,14 @@ const createInstitute = async (req: Request, res: Response) => {
         institutePanNumber = null
     } = req.body;
 
+    // console.log(
+    //     instituteName,
+    //     instituteEmail,
+    //     institutePhoneNumber,
+    //     instituteAddress,
+    //     instituteVatNumber,
+    //     institutePanNumber
+    // )
     console.log("✅ step 7: VALIDATION Triggered")
     if (!instituteName || !instituteEmail || !institutePhoneNumber || !instituteAddress) {
         return res.status(400).json({
@@ -26,7 +34,7 @@ const createInstitute = async (req: Request, res: Response) => {
 
     try {
         const instituteNumber = generateInstituteRandomNumbers();
-        console.log(`✅ step 9 : Generated institute number - ${instituteNumber}`);
+        console.log(`✅ step 8 : Generated institute number - ${instituteNumber}`);
 
         // Step 1: Create institute-specific table
         await sequelize.query(`
@@ -42,23 +50,11 @@ const createInstitute = async (req: Request, res: Response) => {
                 updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             )
         `);
-        console.log(`✅ step 10: Table institute_${instituteNumber} created`);
+        console.log(`✅ step 9: Table institute_${instituteNumber} created`);
 
         // Step 2: Insert institute data into the new table
-        // await sequelize.query(`
-        //     INSERT INTO institute_${instituteNumber} 
-        //     (instituteName, instituteEmail, institutePhoneNumber, instituteAddress, instituteVatNumber, institutePanNumber) 
-        //     VALUES (?, ?, ?, ?, ?, ?)
-        // `, {
-        //     replacements: [
-        //         instituteName, 
-        //         instituteEmail, 
-        //         institutePhoneNumber, 
-        //         instituteAddress, 
-        //         instituteVatNumber, 
-        //         institutePanNumber
-        //     ]
-        // });
+        await sequelize.query(`INSERT INTO institute_${instituteNumber}`)    
+
         // console.log(`✓ Data inserted into institute_${instituteNumber}`);
 
         // Step 3: Optionally, store institute metadata in main table
