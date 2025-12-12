@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { User } from '../../../database/models/userModel.js'
 import bcrypt from 'bcrypt'
-import * as jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import { JWT_SECRET, JWT_EXPIRY } from '../../../config/env.js';
 
 //Register
@@ -65,8 +65,8 @@ class AuthController {
                 message: "Invalid email or password"
             });
         }
-        // console.log(user.password);
-        // console.log(password);
+        console.log(user.password);
+        console.log(password);
 
         const isComparedPassword = await bcrypt.compare(password, user.password);
         if (!isComparedPassword) {
@@ -74,11 +74,11 @@ class AuthController {
                 message: "Invalid email or password"
             });
         };
-        // console.log("logged in password", isComparedPassword)
+        console.log("logged in password", isComparedPassword)
 
-        // console.log('JWT_SECRET:', JWT_SECRET);
-        // console.log('JWT_EXPIRY:', JWT_EXPIRY);
-        // console.log('User ID:', user.id);
+        console.log('JWT_SECRET:', JWT_SECRET);
+        console.log('JWT_EXPIRY:', JWT_EXPIRY);
+        console.log('User ID:', user.id);
 
         const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
         console.log(token);
