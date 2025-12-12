@@ -18,12 +18,12 @@ const createInstitute = async (req: Request, res: Response) => {
     } = req.body;
 
     // console.log(
-    //     instituteName,
-    //     instituteEmail,
-    //     institutePhoneNumber,
-    //     instituteAddress,
-    //     instituteVatNumber,
-    //     institutePanNumber
+    // instituteName,
+    // instituteEmail,
+    // institutePhoneNumber,
+    // instituteAddress,
+    // instituteVatNumber,
+    // institutePanNumber
     // )
     console.log("✅ step 7: VALIDATION Triggered")
     if (!instituteName || !instituteEmail || !institutePhoneNumber || !instituteAddress) {
@@ -53,7 +53,24 @@ const createInstitute = async (req: Request, res: Response) => {
         console.log(`✅ step 9: Table institute_${instituteNumber} created`);
 
         // Step 2: Insert institute data into the new table
-        await sequelize.query(`INSERT INTO institute_${instituteNumber}`)    
+        await sequelize.query(`
+            INSERT INTO institute_${instituteNumber}(
+                instituteName,
+                instituteEmail,
+                institutePhoneNumber,
+                instituteAddress,
+                instituteVatNumber,
+                institutePanNumber
+            ) VALUES (?,?,?,?,?,?)`, {
+            replacements: [
+                instituteName,
+                instituteEmail,
+                institutePhoneNumber,
+                instituteAddress,
+                instituteVatNumber,
+                institutePanNumber
+            ]
+        });
 
         // console.log(`✓ Data inserted into institute_${instituteNumber}`);
 
