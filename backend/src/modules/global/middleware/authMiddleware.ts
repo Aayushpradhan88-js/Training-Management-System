@@ -8,7 +8,7 @@ interface IExtendedRequest extends Request {
         username: string,
         email: string
     }
-}
+};
 
 class userVerification {
     static userAuthorizationAccessVerification(req: IExtendedRequest, res: Response, next: NextFunction) {
