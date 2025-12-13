@@ -1,10 +1,8 @@
 import { Request, Response } from 'express'
-import { User } from '../../../database/models/userModel.js'
+import { User } from '../../../database/models/userModel'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { JWT_SECRET, JWT_EXPIRY } from '../../../config/env.js';
-
-//Register
+import { JWT_SECRET, JWT_EXPIRY } from '../../../config/env';
 
 class AuthController {
     //register
@@ -74,14 +72,14 @@ class AuthController {
                 message: "Invalid email or password"
             });
         };
-        console.log("logged in password", isComparedPassword)
+        // console.log("logged in password", isComparedPassword)
 
-        console.log('JWT_SECRET:', JWT_SECRET);
-        console.log('JWT_EXPIRY:', JWT_EXPIRY);
-        console.log('User ID:', user.id);
+        // console.log('JWT_SECRET:', JWT_SECRET);
+        // console.log('JWT_EXPIRY:', JWT_EXPIRY);
+        // console.log('User ID:', user.id);
 
         const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
-        console.log(token);
+        // console.log(token);
         return res.status(200).json({
             token,
             message: "User loggedin successfully!!"

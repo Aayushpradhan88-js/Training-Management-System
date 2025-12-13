@@ -74,26 +74,6 @@ const createInstitute = async (req: Request, res: Response) => {
         });
         console.log(`✅step 11: Data insertion complete into institute_${instituteNumber}`);
 
-        // Step 3: Optionally, store institute metadata in main table
-        // await sequelize.query(`
-        //     CREATE TABLE IF NOT EXISTS institute_table (
-        //         id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
-        //         instituteNumber INT UNIQUE NOT NULL,
-        //         instituteName VARCHAR(255) NOT NULL,
-        //         instituteEmail VARCHAR(255) NOT NULL UNIQUE,
-        //         createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        //     )
-        // `);
-
-        // await sequelize.query(`
-        //     INSERT INTO institute_table (instituteNumber, instituteName, instituteEmail) 
-        //     VALUES (?, ?, ?)
-        // `, {
-        //     replacements: [instituteNumber, instituteName, instituteEmail]
-        // });
-        // console.log(`✓ Metadata stored in institute_table`);
-
-        // Send success response
         return res.status(201).json({
             message: "Institute created successfully"
             // data: {
@@ -106,8 +86,6 @@ const createInstitute = async (req: Request, res: Response) => {
 
     } catch (error) {
         console.error("✗ Failed to create institute:", (error as Error).stack);
-
-        // CRITICAL: Always send a response in catch block!
         return res.status(500).json({
             message: "Failed to create institute",
             error: (error as Error).message
