@@ -8,7 +8,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRouter);
 
-console.log("✅ step 2: INSTITUTE ROUTER")
+// console.log("✅ step 2: INSTITUTE ROUTER")
 app.use("/api/institute", instituteRouter);
 
 export default app;

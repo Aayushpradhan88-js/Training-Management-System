@@ -2,59 +2,58 @@ import { Request, Response } from "express";
 import sequelize from "../../../database/connection";
 import generateInstituteRandomNumbers from "../../global/services/generateRandomNumber";
 
-console.log("✅ step 4: SEQULIZE TESTING Triggered");
-console.log("✅ step 5: GENERATE RANDOM NUMBER TESTING Triggered", generateInstituteRandomNumbers());
+// console.log("✅ step 4: SEQULIZE TESTING Triggered");
+// console.log("✅ step 5: GENERATE RANDOM NUMBER TESTING Triggered", generateInstituteRandomNumbers());
 
-const createInstitute = async (req: Request, res: Response) => {
-    console.log("✅ step 6: Institute Creation Triggered");
+class instituteController {
+    static async createInstitute(req: Request, res: Response) {
+        // console.log("✅ step 6: Institute Creation Triggered");
+        const {
+            instituteName,
+            instituteEmail,
+            institutePhoneNumber,
+            instituteAddress,
+            instituteVatNumber = null,
+            institutePanNumber = null
+        } = req.body;
 
-    const {
-        instituteName,
-        instituteEmail,
-        institutePhoneNumber,
-        instituteAddress,
-        instituteVatNumber = null,
-        institutePanNumber = null
-    } = req.body;
+        // console.log(
+        // instituteName,
+        // instituteEmail,
+        // institutePhoneNumber,
+        // instituteAddress,
+        // instituteVatNumber,
+        // institutePanNumber
+        // )
+        console.log("✅ step 7: VALIDATION Triggered")
+        if (!instituteName || !instituteEmail || !institutePhoneNumber || !instituteAddress) {
+            return res.status(400).json({
+                message: "Provide all the required fields!!"
+            });
+        };
 
-    // console.log(
-    // instituteName,
-    // instituteEmail,
-    // institutePhoneNumber,
-    // instituteAddress,
-    // instituteVatNumber,
-    // institutePanNumber
-    // )
-    console.log("✅ step 7: VALIDATION Triggered")
-    if (!instituteName || !instituteEmail || !institutePhoneNumber || !instituteAddress) {
-        return res.status(400).json({
-            message: "Provide all the required fields!!"
-        });
-    };
+        try {
+            const instituteNumber = generateInstituteRandomNumbers();
+            console.log(`✅ step 8 : Generated institute number - ${instituteNumber}`);
 
-    try {
-        const instituteNumber = generateInstituteRandomNumbers();
-        console.log(`✅ step 8 : Generated institute number - ${instituteNumber}`);
+            // Step 1: Create institute-specific table
+            await sequelize.query(`CREATE TABLE IF NOT EXISTS institute_${instituteNumber}(
+                   id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+                   instituteName VARCHAR(255) NOT NULL, 
+                   instituteEmail VARCHAR(255) NOT NULL UNIQUE, 
+                   institutePhoneNumber VARCHAR(20) NOT NULL, 
+                   instituteAddress TEXT NOT NULL,
+                   instituteVatNumber VARCHAR(50), 
+                   institutePanNumber VARCHAR(50),
+                   createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                   updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                )`
+            );
+            // console.log(`✅ step 9: Table institute_${instituteNumber} created`);
 
-        // Step 1: Create institute-specific table
-        await sequelize.query(`
-            CREATE TABLE IF NOT EXISTS institute_${instituteNumber}(
-                id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
-                instituteName VARCHAR(255) NOT NULL, 
-                instituteEmail VARCHAR(255) NOT NULL UNIQUE, 
-                institutePhoneNumber VARCHAR(20) NOT NULL, 
-                instituteAddress TEXT NOT NULL,
-                instituteVatNumber VARCHAR(50), 
-                institutePanNumber VARCHAR(50),
-                createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-            )
-        `);
-        console.log(`✅ step 9: Table institute_${instituteNumber} created`);
-
-        // Step 2: Insert institute data into the new table
-        console.log(`✅ step 10: Intersting database table`);
-        await sequelize.query(`
+            // Step 2: Insert institute data into the new table
+            console.log(`✅ step 10: Intersting database table`);
+            await sequelize.query(`
             INSERT INTO institute_${instituteNumber}(
                 instituteName,
                 instituteEmail,
@@ -63,34 +62,44 @@ const createInstitute = async (req: Request, res: Response) => {
                 instituteVatNumber,
                 institutePanNumber
             ) VALUES (?,?,?,?,?,?)`, {
-            replacements: [
-                instituteName,
-                instituteEmail,
-                institutePhoneNumber,
-                instituteAddress,
-                instituteVatNumber,
-                institutePanNumber
-            ]
-        });
-        console.log(`✅step 11: Data insertion complete into institute_${instituteNumber}`);
+                replacements: [
+                    instituteName,
+                    instituteEmail,
+                    institutePhoneNumber,
+                    instituteAddress,
+                    instituteVatNumber,
+                    institutePanNumber
+                ]
+            });
+            console.log(`✅step 11: Data insertion complete into institute_${instituteNumber}`);
 
-        return res.status(201).json({
-            message: "Institute created successfully"
-            // data: {
-            //     instituteNumber,
-            //     instituteName,
-            //     instituteEmail,
-            //     tableName: `institute_${instituteNumber}`
-            // }
-        });
+            return res.status(201).json({
+                message: "Institute created successfully"
+                // data: {
+                //     instituteNumber,
+                //     instituteName,
+                //     instituteEmail,
+                //     tableName: `institute_${instituteNumber}`
+                // }
+            });
 
-    } catch (error) {
-        console.error("✗ Failed to create institute:", (error as Error).stack);
-        return res.status(500).json({
-            message: "Failed to create institute",
-            error: (error as Error).message
-        });
-    }
-};
+        } catch (error) {
+            console.error("✗ Failed to create institute:", (error as Error).stack);
+            return res.status(500).json({
+                message: "Failed to create institute",
+                error: (error as Error).stack
+            });
+        }
+    };
 
-export { createInstitute };
+    // static async teacher(req: Request, res: Response) {
+    //     await sequelize.query(
+    //         `CREATE TABLE institute_id(
+            
+    //         )`
+
+    //     )
+    // }
+}
+
+export default instituteController;
