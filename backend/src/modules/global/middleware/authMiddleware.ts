@@ -3,8 +3,15 @@ import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../../../config/env";
 import { User } from "../../../database/models/userModel";
 
+interface IExtendedRequest extends Request {
+    user?: {
+        username: string,
+        email: string
+    }
+}
+
 class userVerification {
-    static userAuthorizationAccessVerification(req: Request, res: Response, next: NextFunction) {
+    static userAuthorizationAccessVerification(req: IExtendedRequest, res: Response, next: NextFunction) {
         // console.log("✅ step 14: Token triggered");
         const token = req.headers.authorization;
 
@@ -18,11 +25,12 @@ class userVerification {
                 return res.status(403).json({ message: "Invalid token" })
             };
 
-            const userId= await User.findByPk(decoded.id);
-            if(!userId) {
+            const userData = await User.findByPk(decoded.id);
+            if(!userData) {
                 return res.status(401).json({message: "Invalid user"})
             };
-            // (req as any).user = decoded;
+            
+            req.user = userData
             next();
         });
     };
