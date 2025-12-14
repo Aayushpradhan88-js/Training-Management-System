@@ -31,6 +31,7 @@ class userVerification {
             };
             
             req.user = userData
+            console.log("userData", userData);
             next();
         });
     };

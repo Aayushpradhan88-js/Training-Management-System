@@ -33,7 +33,8 @@ export class User extends Model {
     declare password: string
 
     @Column({
-        type: DataType.ENUM('super-admin', 'admin', 'teacher', 'student')
+        type: DataType.ENUM('super-admin', 'admin', 'teacher', 'student'),
+        defaultValue: 'student'
     })
     declare roles: string
 }
