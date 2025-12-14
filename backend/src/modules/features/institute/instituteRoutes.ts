@@ -7,6 +7,8 @@ const instituteRouter = express.Router();
 // console.log("✅ step 3: CREATED INSTITUTE ROUTER STARTED")
 instituteRouter.route("/").post(
     userVerification.userAuthorizationAccessVerification,
-     instituteController.createInstitute);
+     instituteController.createInstitute
+     
+    );
 
 export default instituteRouter;

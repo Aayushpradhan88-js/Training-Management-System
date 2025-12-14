@@ -6,8 +6,9 @@ interface IExtendedRequest extends Request {
         username: string,
         email: string,
         password: string,
-        roles: string
+        roles: string,
     }
+    currentInstituteNumber: string
 }
 
 export default IExtendedRequest;
