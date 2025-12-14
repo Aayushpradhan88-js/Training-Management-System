@@ -4,15 +4,6 @@ import { JWT_SECRET } from "../../../config/env";
 import { User } from "../../../database/models/userModel";
 import IExtendedRequest from "../types/types";
 
-// interface IExtendedRequest extends Request {
-//     user?: {
-//         username: string,
-//         email: string,
-//         password: string,
-//         roles: string
-//     }
-// };
-
 class userVerification {
     static userAuthorizationAccessVerification(req: IExtendedRequest, res: Response, next: NextFunction) {
         // console.log("✅ step 14: Token triggered");
@@ -34,7 +25,7 @@ class userVerification {
                 return res.status(401).json({ message: "Invalid user" })
             };
 
-            req.user = userData
+            req.user = userData;
             // console.log("userData", userData);
             next();
         });
