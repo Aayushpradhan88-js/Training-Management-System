@@ -1,13 +1,19 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import sequelize from "../../../database/connection";
 import generateInstituteRandomNumbers from "../../global/services/generateRandomNumber";
+import IExtendedRequest from "../../global/types/types";
 
 // console.log("✅ step 4: SEQULIZE TESTING Triggered");
 // console.log("✅ step 5: GENERATE RANDOM NUMBER TESTING Triggered", generateInstituteRandomNumbers());
 
 class instituteController {
-    static async createInstitute(req: Request, res: Response) {
+    static async createInstitute(req: IExtendedRequest, res: Response) {
+        const userData = req.user;
+        // console.log("ID DATA FROM MIDDLEWARE", userID?.email); //if email not found send undefined or null
+        // console.log("✅ DATA FROM MIDDLEWARE",req.user)
         // console.log("✅ step 6: Institute Creation Triggered");
+        console.log("✅ UserData", userData);
+
         const {
             instituteName,
             instituteEmail,
@@ -25,7 +31,7 @@ class instituteController {
         // instituteVatNumber,
         // institutePanNumber
         // )
-        console.log("✅ step 7: VALIDATION Triggered")
+        // console.log("✅ step 7: VALIDATION Triggered")
         if (!instituteName || !instituteEmail || !institutePhoneNumber || !instituteAddress) {
             return res.status(400).json({
                 message: "Provide all the required fields!!"
@@ -34,7 +40,7 @@ class instituteController {
 
         try {
             const instituteNumber = generateInstituteRandomNumbers();
-            console.log(`✅ step 8 : Generated institute number - ${instituteNumber}`);
+            // console.log(`✅ step 8 : Generated institute number - ${instituteNumber}`);
 
             // Step 1: Create institute-specific table
             await sequelize.query(`CREATE TABLE IF NOT EXISTS institute_${instituteNumber}(
@@ -51,8 +57,7 @@ class instituteController {
             );
             // console.log(`✅ step 9: Table institute_${instituteNumber} created`);
 
-            // Step 2: Insert institute data into the new table
-            console.log(`✅ step 10: Intersting database table`);
+            // console.log(`✅ step 10: Intersting database table`);
             await sequelize.query(`
             INSERT INTO institute_${instituteNumber}(
                 instituteName,
@@ -91,15 +96,6 @@ class instituteController {
             });
         }
     };
-
-    // static async teacher(req: Request, res: Response) {
-    //     await sequelize.query(
-    //         `CREATE TABLE institute_id(
-            
-    //         )`
-
-    //     )
-    // }
 }
 
 export default instituteController;
