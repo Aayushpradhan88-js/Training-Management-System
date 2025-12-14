@@ -107,7 +107,8 @@ class instituteController {
             await user?.save();
             console.log("✅currentInstituteNumber data is updated");
 
-            next();
+            return res.status(200).json({message: "institute created!!"});
+            // next();
         } catch (error) {
             console.error("✗ Failed to create institute:", (error as Error).stack);
             return res.status(500).json({
