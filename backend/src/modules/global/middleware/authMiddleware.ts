@@ -4,32 +4,29 @@ import { JWT_SECRET } from "../../../config/env";
 import { User } from "../../../database/models/userModel";
 import IExtendedRequest from "../types/types";
 
-class userVerification {
+class UserVerification {
     static userAuthorizationAccessVerification(req: IExtendedRequest, res: Response, next: NextFunction) {
-        // console.log("✅ step 14: Token triggered");
-        const token = req.headers.authorization;
+        const token = req.headers.authorization; //getting token from headers
+        if (!token) {
+            return res.status(401).json({ message: "Token not found" });
+        };
 
-        // console.log("✅ step 15: Token validation completed", token);
-        // console.log("✅ step 16: secret token", JWT_SECRET);
+        //verifying token
         jwt.verify((token as string), JWT_SECRET, async (error, decoded: any) => {
-            // console.log("success", decoded);
-            // console.log("error", error);
             if (error) {
-                // console.error(error.stack)
                 return res.status(403).json({ message: "Invalid token" })
             };
 
+            //verifying is user existes or not 
             const userData = await User.findByPk(decoded.id);
-            // console.log("DECODED ID", decoded.id)
             if (!userData) {
                 return res.status(401).json({ message: "Invalid user" })
             };
 
             req.user = userData;
-            // console.log("userData", userData);
             next();
         });
     };
 };
 
-export default userVerification;
+export default UserVerification;
