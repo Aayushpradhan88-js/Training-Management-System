@@ -8,7 +8,7 @@ interface IExtendedRequest extends Request {
         password: string,
         roles: string,
     }
-    currentInstituteNumber: string
+    // currentInstituteNumber: string
 }
 
 export default IExtendedRequest;
