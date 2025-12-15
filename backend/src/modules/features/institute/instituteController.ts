@@ -115,11 +115,11 @@ class instituteController {
 
             req.instituteNumber = String(instituteNumber)
 
-            console.log("teacher instituteNumber", req.instituteNumber);
+            // console.log("✅ teacher instituteNumber", req.instituteNumber);
 
-            return res.status(200).json({ message: "institute created!!" });
+            // return res.status(200).json({ message: "institute created!!" });
 
-            // next();
+            next();
         } catch (error) {
             console.error("✗ Failed to create institute:", (error as Error).stack);
             return res.status(500).json({
@@ -128,6 +128,8 @@ class instituteController {
             });
         }
     };
+
+    static async createTeacherTable
 }
 
 export default instituteController;
