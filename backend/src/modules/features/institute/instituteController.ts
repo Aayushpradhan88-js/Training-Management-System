@@ -9,11 +9,11 @@ import { User } from "../../../database/models/userModel";
 
 class instituteController {
     static async createInstitute(req: IExtendedRequest, res: Response, next: NextFunction) {
-        const userData = req.user;
+        // const userData = req.user;
         // console.log("ID DATA FROM MIDDLEWARE", userID?.email); //if email not found send undefined or null
         // console.log("✅ DATA FROM MIDDLEWARE",req.user)
         // console.log("✅ step 6: Institute Creation Triggered");
-        console.log("✅ UserData", userData);
+        // console.log("✅ UserData", userData);
 
         const {
             instituteName,
@@ -40,9 +40,10 @@ class instituteController {
         };
 
         try {
-            const instituteNumber = generateInstituteRandomNumbers();
+            const instituteNumber: Number = generateInstituteRandomNumbers();
             // console.log(`✅ step 8 : Generated institute number - ${instituteNumber}`);
 
+            //table creation for institute
             await sequelize.query(`
                 CREATE TABLE IF NOT EXISTS institute_${instituteNumber}(
                    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
@@ -56,6 +57,7 @@ class instituteController {
                    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                 )`
             );
+            //inserting institute data
             await sequelize.query(`
             INSERT INTO institute_${instituteNumber}(
                 instituteName,
@@ -77,22 +79,25 @@ class instituteController {
             console.log(`✅step 11: Data insertion complete into institute_${instituteNumber}`);
 
             console.log("✅user history triggered")
+            // console.log("userid & instituteNumber", req.user, req.user?.id, instituteNumber)
+
             //storing user history table creation
             await sequelize.query(`
-                CREATE TABLE IF NOT EXIST user_history(
-                    id VARCHAR(55) AUTO_INCREMENT,
+                CREATE TABLE IF NOT EXISTS user_history(
+                    id INT AUTO_INCREMENT PRIMARY KEY,
                     userId VARCHAR(255) NOT NULL REFERENCES user(id),
                     instituteNumber VARCHAR(255) NOT NULL
                 )`
             );
             //inserting data to user history table
+            console.log("✅ insert user history triggered")
+            // console.log("userid & instituteNumber", req.user, req.user?.id, instituteNumber)
             if (req.user) {
                 await sequelize.query(
                     `INSERT INTO user_history(
-                        id,
                         userId,
                         instituteNumber
-                    ), VALUE(?,?,?)`, {
+                    ) VALUES(?,?)`, {
                     replacements: [req.user?.id, instituteNumber]
                 });
             };
@@ -104,10 +109,16 @@ class instituteController {
             };
             //updating instituteNumber in user table
             user.currentInstituteNumber = String(instituteNumber);
+            user.roles = "admin"
             await user?.save();
             console.log("✅currentInstituteNumber data is updated");
 
-            return res.status(200).json({message: "institute created!!"});
+            req.instituteNumber = String(instituteNumber)
+
+            console.log("teacher instituteNumber", req.instituteNumber);
+
+            return res.status(200).json({ message: "institute created!!" });
+
             // next();
         } catch (error) {
             console.error("✗ Failed to create institute:", (error as Error).stack);

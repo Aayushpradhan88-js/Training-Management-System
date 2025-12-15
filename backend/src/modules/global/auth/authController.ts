@@ -20,19 +20,23 @@ class AuthController {
             })
         };
 
-        const hashedPassword = await bcrypt.hash(password, 12);
+        try {
+            const hashedPassword = await bcrypt.hash(password, 12);
 
-        const data = await User.create({
-            username,
-            email,
-            password: hashedPassword
-        });
+            const data = await User.create({
+                username,
+                email,
+                password: hashedPassword
+            });
 
-        return res.status(200).json({
-            message: "user successfully registered",
-            datas: data
-        })
-    }
+            return res.status(200).json({
+                message: "user successfully registered",
+                datas: data
+            })
+        } catch (error) {
+            console.error("error triggered", (error as Error).stack);
+        };
+    };
 
     //login 
     static async loginUser(req: Request, res: Response) {
