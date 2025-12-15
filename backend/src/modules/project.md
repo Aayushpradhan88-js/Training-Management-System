@@ -11,3 +11,7 @@
     course table create hunu paro same _id bata.
 
 4. change functional code to oop based code.
+
+Passwords:
+
+ "password": "Sabin2025Nepal"

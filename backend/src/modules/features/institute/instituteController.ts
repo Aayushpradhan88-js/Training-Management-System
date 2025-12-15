@@ -1,8 +1,9 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import sequelize from "../../../database/connection";
 import generateInstituteRandomNumbers from "../../global/services/generateRandomNumber";
 import IExtendedRequest from "../../global/types/types";
 import { User } from "../../../database/models/userModel";
+import { Next } from "mysql2/typings/mysql/lib/parsers/typeCast";
 
 // console.log("✅ step 4: SEQULIZE TESTING Triggered");
 // console.log("✅ step 5: GENERATE RANDOM NUMBER TESTING Triggered", generateInstituteRandomNumbers());
@@ -129,7 +130,68 @@ class instituteController {
         }
     };
 
-    static async createTeacherTable
-}
+    static async createTeacherTable(req: IExtendedRequest, res: Response, next: NextFunction) {
+        const instituteNumber = req?.instituteNumber;
+        console.log("✅ teacher instituteNumber", req?.instituteNumber);
+
+        try {
+            await sequelize.query(`
+               CREATE TABLE IF NOT EXISTS teacher_${instituteNumber}(
+                teacher_id  VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+                teacherName VARCHAR(255) NOT NULL, 
+                teacherEmail VARCHAR(255) NOT NULL UNIQUE, 
+                teacherPhoneNumber VARCHAR(255) NOT NULL UNIQUE,
+                teacherExperience VARCHAR(255), 
+                joinedDate DATE, 
+                salary VARCHAR(100),
+                teacherPhoto VARCHAR(255), 
+                teacherPassword VARCHAR(255),
+                courseId VARCHAR(100) REFERENCES course_${instituteNumber}(id),
+                createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+                updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+               )
+           `);
+
+            next();
+        } catch (error) {
+            console.error("✗ Failed to teacher table:", (error as Error).stack);
+            return res.status(500).json({
+                message: "Failed to create teacher table",
+                error: (error as Error).stack
+            });
+        }
+    };
+
+    static async createStudentTable(req: IExtendedRequest, res: Response, next: NextFunction) {
+        const instituteNumber = req.instituteNumber;
+        console.log("✅ student instituteNumber", req.instituteNumber);
+
+        await sequelize.query(`CREATE TABLE IF NOT EXISTS student_${instituteNumber}(
+             id VARCHAR(55) PRIMARY KEY DEFAULT (UUID()),
+            studentName VARCHAR(255) NOT NULL, 
+            studentPhoneNo VARCHAR(255) NOT NULL UNIQUE, 
+            studentAddress TEXT, 
+            enrolledDate DATE, 
+            studentImage VARCHAR(255),
+            createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+            updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
+            )`);
+
+        return res.status(200).json({ message: "institute created!!" });
+    };
+
+    // static async createCourseChapterTable(req: IExtendedRequest, res:Response, next:Next){
+    //     const instituteNumber = req.instituteNumber;
+
+    //     await sequelize.query(`
+    //         CREATE TABLE IF NOT EXISTS course_table_${instituteNumber}
+    //         course_id 
+    //         chapterName
+    //         chapterDuration
+    //     `)
+    // }
+};
+
+
 
 export default instituteController;

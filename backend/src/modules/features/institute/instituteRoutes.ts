@@ -6,7 +6,9 @@ const instituteRouter = express.Router();
 
 instituteRouter.route("/").post(
     userVerification.userAuthorizationAccessVerification,//middleware implemented before institute creation
-    instituteController.createInstitute
+    instituteController.createInstitute,
+    instituteController.createTeacherTable,
+    instituteController.createStudentTable
 );
 
 export default instituteRouter;
