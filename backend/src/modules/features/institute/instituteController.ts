@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import sequelize from "../../../database/connection";
-import generateInstituteRandomNumbers from "../../global/services/generateRandomNumber";
 import IExtendedRequest from "../../global/types/types";
 import { User } from "../../../database/models/userModel";
+import RandomInstituteNumber from "../../global/services/generateRandomNumber";
 
 class instituteController {
     //institute table
@@ -23,7 +23,7 @@ class instituteController {
         };
 
         try {
-            const instituteNumber: Number = generateInstituteRandomNumbers();
+            const instituteNumber: Number = RandomInstituteNumber.generateInstituteRandomNumbers()
             //table creation for institute
             await sequelize.query(`
                 CREATE TABLE IF NOT EXISTS institute_${instituteNumber}(
