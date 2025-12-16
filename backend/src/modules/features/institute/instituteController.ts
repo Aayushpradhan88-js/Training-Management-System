@@ -165,6 +165,42 @@ class InstituteController {
         }
     };
 
+
+
+
+
+
+
+
+
+
+
+    static async createCourseTable(req:IExtendedRequest, next:NextFunction){
+        const instituteNumber = req?.instituteNumber;
+        await sequelize.query(`
+            CREATE TABLE IF NOT EXISTS course_${instituteNumber}(
+                
+            )
+        `)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //course chapter table 
     static async createCourseChapterTable(req: IExtendedRequest, res: Response) {
         console.log("course triggered");
