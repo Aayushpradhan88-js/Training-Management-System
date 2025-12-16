@@ -89,7 +89,7 @@ class instituteController {
 
             next();
         } catch (error) {
-            console.error("✗ Failed to teacher table:", (error as Error).stack);
+            console.error("✗ Server Error: Failed to create institute table:", (error as Error).stack);
             return res.status(500).json({
                 errorMessage: (error as Error).message,
                 fullErrorMessage: error
@@ -157,7 +157,7 @@ class instituteController {
 
             next();
         } catch (error) {
-            console.error("✗ Failed to teacher table:", (error as Error).stack);
+            console.error("✗ Server Error: Failed to create student table:", (error as Error).stack);
             return res.status(500).json({
                 errorMessage: (error as Error).message,
                 fullErrorMessage: error
