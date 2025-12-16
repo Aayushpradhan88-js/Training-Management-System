@@ -6,7 +6,7 @@ import RandomInstituteNumber from "../../global/services/generateRandomNumber";
 
 class instituteController {
     //institute table
-    static async createInstitute(req: IExtendedRequest, res:Response, next: NextFunction) {
+    static async createInstitute(req: IExtendedRequest, res: Response, next: NextFunction) {
         const {
             instituteName,
             instituteEmail,
@@ -155,7 +155,7 @@ class instituteController {
             updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
             )`);
 
-        next(); 
+        next();
     };
 
     //course chapter table 
@@ -168,25 +168,18 @@ class instituteController {
             });
         };
 
-        try {
-            await sequelize.query(`
+        await sequelize.query(`
                 CREATE TABLE IF NOT EXISTS course_chapter_${instituteNumber}(
                     course_id VARCHAR(55) PRIMARY KEY DEFAULT (UUID()),
                     chapterName VARCHAR(255) NOT NULL,
                     chapterDuration VARCHAR(255) NOT NULL,
                     chapterLevel ENUM('basic','intermediate','advance')  NOT NULL,
                     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-                    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
+                    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                 )
             `);
-    
-            return res.status(200).json({ message: "institute created!!" });
-        } catch (error) {
-            console.error((error as Error))
-            return res.status(500).json({
-                error: (error as Error)
-            })
-        }
+
+        return res.status(200).json({ message: "institute created!!" });
     }
 };
 

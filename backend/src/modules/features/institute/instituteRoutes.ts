@@ -1,6 +1,7 @@
 import express from 'express'
 import userVerification from '../../global/middleware/authMiddleware';
 import instituteController from './instituteController';
+import GlobalErrorHandler from '../../global/services/asyncErrorHandler';
 
 const instituteRouter = express.Router();
 
@@ -9,7 +10,7 @@ instituteRouter.route("/").post(
     instituteController.createInstitute,
     instituteController.createTeacherTable,
     instituteController.createStudentTable,
-    instituteController.createCourseChapterTable
+    GlobalErrorHandler.asyncErrorHandler(instituteController.createCourseChapterTable)
 );
 
 export default instituteRouter;
