@@ -10,6 +10,7 @@ instituteRouter.route("/").post(
     InstituteController.createInstitute,
     InstituteController.createTeacherTable,
     InstituteController.createStudentTable,
+    GlobalErrorHandler.asyncErrorHandler(InstituteController.createCourseTable),
     GlobalErrorHandler.asyncErrorHandler(InstituteController.createCourseChapterTable)
 );
 

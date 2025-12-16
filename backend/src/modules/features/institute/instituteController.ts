@@ -144,16 +144,18 @@ class InstituteController {
         };
 
         try {
-            await sequelize.query(`CREATE TABLE IF NOT EXISTS student_${instituteNumber}(
-                id VARCHAR(55) PRIMARY KEY DEFAULT (UUID()),
-                studentName VARCHAR(255) NOT NULL, 
-                studentPhoneNo VARCHAR(255) NOT NULL UNIQUE, 
-                studentAddress TEXT, 
-                enrolledDate DATE, 
-                studentImage VARCHAR(255),
-                createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-                updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
-                )`);
+            await sequelize.query(`
+                CREATE TABLE IF NOT EXISTS student_${instituteNumber}(
+                    id VARCHAR(55) PRIMARY KEY DEFAULT (UUID()),
+                    studentName VARCHAR(255) NOT NULL, 
+                    studentPhoneNo VARCHAR(255) NOT NULL UNIQUE, 
+                    studentAddress TEXT, 
+                    enrolledDate DATE, 
+                    studentImage VARCHAR(255),
+                    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+                    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
+                )`
+            );
 
             next();
         } catch (error) {
@@ -175,35 +177,37 @@ class InstituteController {
 
 
 
-    static async createCourseTable(req:IExtendedRequest, next:NextFunction){
+    static async createCourseTable(req: IExtendedRequest, res: Response, next: NextFunction) {
+        console.log("course table triggered");
         const instituteNumber = req?.instituteNumber;
+        if (!instituteNumber || instituteNumber.trim().length === 0) {
+            return res.status(400).json({
+                message: 'invalid institute number'
+            });
+        };
         await sequelize.query(`
             CREATE TABLE IF NOT EXISTS course_${instituteNumber}(
-                
+                id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+                courseName VARCHAR(255) NOT NULL,
+                courseDescription VARCHAR(255),
+                coursePrice VARCHAR(255),
+                courseDuration VARCHAR(100),
+                courseLevel ENUM('beginner','intermediate','advance') NOT NULL,
+                courseThumbnail VARCHAR(255),
+                courseInstructor TEXT,
+                courseSyllabus TEXT,
+                teacher_id VARCHAR(36),
+                category_id VARCHAR(36),
+                createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+                updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
             )
-        `)
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        `);
+        next();
+    };
 
     //course chapter table 
     static async createCourseChapterTable(req: IExtendedRequest, res: Response) {
-        console.log("course triggered");
+        console.log("course chapter table triggered");
         const instituteNumber = req?.instituteNumber
         if (!instituteNumber || instituteNumber.trim().length === 0) {
             return res.status(400).json({
