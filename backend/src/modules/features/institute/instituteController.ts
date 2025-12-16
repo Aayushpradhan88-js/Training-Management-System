@@ -89,10 +89,10 @@ class instituteController {
 
             next();
         } catch (error) {
-            console.error("✗ Failed to create institute:", (error as Error).stack);
+            console.error("✗ Failed to teacher table:", (error as Error).stack);
             return res.status(500).json({
-                message: "Failed to create institute",
-                error: (error as Error).stack
+                errorMessage: (error as Error).message,
+                fullErrorMessage: error
             });
         };
     };
@@ -105,7 +105,7 @@ class instituteController {
                 message: 'invalid institute number'
             });
         };
-        console.log("✅ teacher instituteNumber", req?.instituteNumber);
+        // console.log("✅ teacher instituteNumber", req?.instituteNumber);
 
         try {
             await sequelize.query(`
@@ -124,13 +124,12 @@ class instituteController {
                 updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                )
            `);
-
             next();
         } catch (error) {
             console.error("✗ Failed to teacher table:", (error as Error).stack);
             return res.status(500).json({
-                message: "Failed to create teacher table",
-                error: (error as Error).stack
+                errorMessage: (error as Error).message,
+                fullErrorMessage: error
             });
         }
     };
@@ -144,18 +143,26 @@ class instituteController {
             });
         };
 
-        await sequelize.query(`CREATE TABLE IF NOT EXISTS student_${instituteNumber}(
-            id VARCHAR(55) PRIMARY KEY DEFAULT (UUID()),
-            studentName VARCHAR(255) NOT NULL, 
-            studentPhoneNo VARCHAR(255) NOT NULL UNIQUE, 
-            studentAddress TEXT, 
-            enrolledDate DATE, 
-            studentImage VARCHAR(255),
-            createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-            updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
-            )`);
+        try {
+            await sequelize.query(`CREATE TABLE IF NOT EXISTS student_${instituteNumber}(
+                id VARCHAR(55) PRIMARY KEY DEFAULT (UUID()),
+                studentName VARCHAR(255) NOT NULL, 
+                studentPhoneNo VARCHAR(255) NOT NULL UNIQUE, 
+                studentAddress TEXT, 
+                enrolledDate DATE, 
+                studentImage VARCHAR(255),
+                createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+                updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
+                )`);
 
-        next();
+            next();
+        } catch (error) {
+            console.error("✗ Failed to teacher table:", (error as Error).stack);
+            return res.status(500).json({
+                errorMessage: (error as Error).message,
+                fullErrorMessage: error
+            });
+        }
     };
 
     //course chapter table 
