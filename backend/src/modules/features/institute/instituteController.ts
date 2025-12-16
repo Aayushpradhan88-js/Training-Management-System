@@ -3,19 +3,9 @@ import sequelize from "../../../database/connection";
 import generateInstituteRandomNumbers from "../../global/services/generateRandomNumber";
 import IExtendedRequest from "../../global/types/types";
 import { User } from "../../../database/models/userModel";
-import { Next } from "mysql2/typings/mysql/lib/parsers/typeCast";
-
-// console.log("✅ step 4: SEQULIZE TESTING Triggered");
-// console.log("✅ step 5: GENERATE RANDOM NUMBER TESTING Triggered", generateInstituteRandomNumbers());
 
 class instituteController {
     static async createInstitute(req: IExtendedRequest, res: Response, next: NextFunction) {
-        // const userData = req.user;
-        // console.log("ID DATA FROM MIDDLEWARE", userID?.email); //if email not found send undefined or null
-        // console.log("✅ DATA FROM MIDDLEWARE",req.user)
-        // console.log("✅ step 6: Institute Creation Triggered");
-        // console.log("✅ UserData", userData);
-
         const {
             instituteName,
             instituteEmail,
@@ -25,15 +15,6 @@ class instituteController {
             institutePanNumber = null
         } = req.body;
 
-        // console.log(
-        // instituteName,
-        // instituteEmail,
-        // institutePhoneNumber,
-        // instituteAddress,
-        // instituteVatNumber,
-        // institutePanNumber
-        // )
-        // console.log("✅ step 7: VALIDATION Triggered")
         if (!instituteName || !instituteEmail || !institutePhoneNumber || !instituteAddress) {
             return res.status(400).json({
                 message: "Provide all the required fields!!"
@@ -42,8 +23,6 @@ class instituteController {
 
         try {
             const instituteNumber: Number = generateInstituteRandomNumbers();
-            // console.log(`✅ step 8 : Generated institute number - ${instituteNumber}`);
-
             //table creation for institute
             await sequelize.query(`
                 CREATE TABLE IF NOT EXISTS institute_${instituteNumber}(
@@ -77,10 +56,6 @@ class instituteController {
                     institutePanNumber
                 ]
             });
-            console.log(`✅step 11: Data insertion complete into institute_${instituteNumber}`);
-
-            console.log("✅user history triggered")
-            // console.log("userid & instituteNumber", req.user, req.user?.id, instituteNumber)
 
             //storing user history table creation
             await sequelize.query(`
@@ -91,8 +66,6 @@ class instituteController {
                 )`
             );
             //inserting data to user history table
-            console.log("✅ insert user history triggered")
-            // console.log("userid & instituteNumber", req.user, req.user?.id, instituteNumber)
             if (req.user) {
                 await sequelize.query(
                     `INSERT INTO user_history(
@@ -102,7 +75,6 @@ class instituteController {
                     replacements: [req.user?.id, instituteNumber]
                 });
             };
-            console.log("✅user history table created");
 
             const user = await User.findByPk(req.user?.id); //finding user
             if (!user) {
@@ -112,13 +84,7 @@ class instituteController {
             user.currentInstituteNumber = String(instituteNumber);
             user.roles = "admin"
             await user?.save();
-            console.log("✅currentInstituteNumber data is updated");
-
             req.instituteNumber = String(instituteNumber)
-
-            // console.log("✅ teacher instituteNumber", req.instituteNumber);
-
-            // return res.status(200).json({ message: "institute created!!" });
 
             next();
         } catch (error) {
@@ -127,7 +93,7 @@ class instituteController {
                 message: "Failed to create institute",
                 error: (error as Error).stack
             });
-        }
+        };
     };
 
     static async createTeacherTable(req: IExtendedRequest, res: Response, next: NextFunction) {
