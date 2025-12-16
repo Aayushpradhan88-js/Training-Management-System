@@ -12,7 +12,13 @@
     course table create hunu paro same _id bata.
   ✅
 4. change functional code to oop based code.
+  ✅
 
+5. Course Controller add all CRUD OPERATIONS 
+
+6. Better error handling 
+
+7. Course controller TESTING
 Passwords:
 
  "password": "Sabin2025Nepal"

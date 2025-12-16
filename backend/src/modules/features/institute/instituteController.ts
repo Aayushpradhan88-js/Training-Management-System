@@ -4,7 +4,7 @@ import IExtendedRequest from "../../global/types/types";
 import { User } from "../../../database/models/userModel";
 import RandomInstituteNumber from "../../global/services/generateRandomNumber";
 
-class instituteController {
+class InstituteController {
     //institute table
     static async createInstitute(req: IExtendedRequest, res: Response, next: NextFunction) {
         const {
@@ -190,4 +190,4 @@ class instituteController {
     }
 };
 
-export default instituteController;
+export default InstituteController;
