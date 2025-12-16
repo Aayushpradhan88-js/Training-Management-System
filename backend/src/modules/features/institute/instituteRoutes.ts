@@ -5,7 +5,7 @@ import instituteController from './instituteController';
 const instituteRouter = express.Router();
 
 instituteRouter.route("/").post(
-    userVerification.userAuthorizationAccessVerification,//middleware implemented before institute creation
+    userVerification.userAuthorizationAccessVerification,
     instituteController.createInstitute,
     instituteController.createTeacherTable,
     instituteController.createStudentTable,

@@ -145,7 +145,7 @@ class instituteController {
         };
 
         await sequelize.query(`CREATE TABLE IF NOT EXISTS student_${instituteNumber}(
-             id VARCHAR(55) PRIMARY KEY DEFAULT (UUID()),
+            id VARCHAR(55) PRIMARY KEY DEFAULT (UUID()),
             studentName VARCHAR(255) NOT NULL, 
             studentPhoneNo VARCHAR(255) NOT NULL UNIQUE, 
             studentAddress TEXT, 
@@ -160,6 +160,7 @@ class instituteController {
 
     //course chapter table 
     static async createCourseChapterTable(req: IExtendedRequest, res: Response) {
+        console.log("course triggered");
         const instituteNumber = req?.instituteNumber
         if (!instituteNumber || instituteNumber.trim().length === 0) {
             return res.status(400).json({
@@ -167,18 +168,25 @@ class instituteController {
             });
         };
 
-        await sequelize.query(`
-            CREATE TABLE IF NOT EXISTS course_table_${instituteNumber}(
-                course_id VARCHAR(255) NOT NULL,
-                chapterName VARCHAR(255) NOT NULL,
-                chapterDuration VARCHAR(255) NOT NULL,
-                chapterLevel VARCHAR(255) NOT NULL ENUM('basic', 'intermediate', 'advance'),
-                createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-                updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
-            )
-        `);
-
-        return res.status(200).json({ message: "institute created!!" });
+        try {
+            await sequelize.query(`
+                CREATE TABLE IF NOT EXISTS course_chapter_${instituteNumber}(
+                    course_id VARCHAR(55) PRIMARY KEY DEFAULT (UUID()),
+                    chapterName VARCHAR(255) NOT NULL,
+                    chapterDuration VARCHAR(255) NOT NULL,
+                    chapterLevel ENUM('basic','intermediate','advance')  NOT NULL,
+                    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+                    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
+                )
+            `);
+    
+            return res.status(200).json({ message: "institute created!!" });
+        } catch (error) {
+            console.error((error as Error))
+            return res.status(500).json({
+                error: (error as Error)
+            })
+        }
     }
 };
 
