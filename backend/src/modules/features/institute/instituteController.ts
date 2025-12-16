@@ -5,6 +5,7 @@ import IExtendedRequest from "../../global/types/types";
 import { User } from "../../../database/models/userModel";
 
 class instituteController {
+    //institute table
     static async createInstitute(req: IExtendedRequest, res: Response, next: NextFunction) {
         const {
             instituteName,
@@ -96,8 +97,14 @@ class instituteController {
         };
     };
 
+    //teacher table
     static async createTeacherTable(req: IExtendedRequest, res: Response, next: NextFunction) {
-        const instituteNumber = req?.instituteNumber;
+        const instituteNumber = req?.instituteNumber
+        if (!instituteNumber || instituteNumber.trim().length === 0) {
+            return res.status(400).json({
+                message: 'invalid institute number'
+            });
+        };
         console.log("✅ teacher instituteNumber", req?.instituteNumber);
 
         try {
@@ -128,9 +135,14 @@ class instituteController {
         }
     };
 
+    //student table
     static async createStudentTable(req: IExtendedRequest, res: Response, next: NextFunction) {
-        const instituteNumber = req.instituteNumber;
-        console.log("✅ student instituteNumber", req.instituteNumber);
+        const instituteNumber = req?.instituteNumber;
+        if (!instituteNumber || instituteNumber.trim().length === 0) {
+            return res.status(400).json({
+                message: 'invalid institute number'
+            });
+        };
 
         await sequelize.query(`CREATE TABLE IF NOT EXISTS student_${instituteNumber}(
              id VARCHAR(55) PRIMARY KEY DEFAULT (UUID()),
@@ -143,21 +155,31 @@ class instituteController {
             updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
             )`);
 
-        return res.status(200).json({ message: "institute created!!" });
+        next(); 
     };
 
-    // static async createCourseChapterTable(req: IExtendedRequest, res:Response, next:Next){
-    //     const instituteNumber = req.instituteNumber;
+    //course chapter table 
+    static async createCourseChapterTable(req: IExtendedRequest, res: Response) {
+        const instituteNumber = req?.instituteNumber
+        if (!instituteNumber || instituteNumber.trim().length === 0) {
+            return res.status(400).json({
+                message: 'invalid institute number'
+            });
+        };
 
-    //     await sequelize.query(`
-    //         CREATE TABLE IF NOT EXISTS course_table_${instituteNumber}
-    //         course_id 
-    //         chapterName
-    //         chapterDuration
-    //     `)
-    // }
+        await sequelize.query(`
+            CREATE TABLE IF NOT EXISTS course_table_${instituteNumber}(
+                course_id VARCHAR(255) NOT NULL,
+                chapterName VARCHAR(255) NOT NULL,
+                chapterDuration VARCHAR(255) NOT NULL,
+                chapterLevel VARCHAR(255) NOT NULL ENUM('basic', 'intermediate', 'advance'),
+                createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+                updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
+            )
+        `);
+
+        return res.status(200).json({ message: "institute created!!" });
+    }
 };
-
-
 
 export default instituteController;

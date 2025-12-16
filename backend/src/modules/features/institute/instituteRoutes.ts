@@ -8,7 +8,8 @@ instituteRouter.route("/").post(
     userVerification.userAuthorizationAccessVerification,//middleware implemented before institute creation
     instituteController.createInstitute,
     instituteController.createTeacherTable,
-    instituteController.createStudentTable
+    instituteController.createStudentTable,
+    instituteController.createCourseChapterTable
 );
 
 export default instituteRouter;
