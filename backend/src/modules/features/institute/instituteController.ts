@@ -167,6 +167,7 @@ class InstituteController {
         }
     };
 
+    //course table
     static async createCourseTable(req: IExtendedRequest, res: Response, next: NextFunction) {
         const instituteNumber = req?.instituteNumber;
         if (!instituteNumber || instituteNumber.trim().length === 0) {
@@ -194,7 +195,7 @@ class InstituteController {
             `);
             next();
         } catch (error) {
-            console.error("✗ Server Error: Failed to create student table:", (error as Error).stack);
+            console.error("✗ Server Error: Failed to create course table:", (error as Error).stack);
             return res.status(500).json({
                 errorMessage: (error as Error).message,
                 fullErrorMessage: error
