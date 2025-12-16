@@ -6,7 +6,7 @@ import RandomInstituteNumber from "../../global/services/generateRandomNumber";
 
 class instituteController {
     //institute table
-    static async createInstitute(req: IExtendedRequest, res: Response, next: NextFunction) {
+    static async createInstitute(req: IExtendedRequest, res:Response, next: NextFunction) {
         const {
             instituteName,
             instituteEmail,
