@@ -85,9 +85,11 @@ class InstituteController {
             user.currentInstituteNumber = String(instituteNumber);
             user.roles = "admin"
             await user?.save();
-            req.instituteNumber = String(instituteNumber)
-
-            next();
+            if(req.user){
+                req.user.currentInstituteNumber = String(instituteNumber)
+            }
+            next()
+            ;
         } catch (error) {
             console.error("✗ Server Error: Failed to create institute table:", (error as Error).stack);
             return res.status(500).json({
@@ -99,7 +101,7 @@ class InstituteController {
 
     //teacher table
     static async createTeacherTable(req: IExtendedRequest, res: Response, next: NextFunction) {
-        const instituteNumber = req?.instituteNumber
+        const instituteNumber = req.user?.currentInstituteNumber;
         if (!instituteNumber || instituteNumber.trim().length === 0) {
             return res.status(400).json({
                 message: 'invalid institute number'
@@ -136,7 +138,7 @@ class InstituteController {
 
     //student table
     static async createStudentTable(req: IExtendedRequest, res: Response, next: NextFunction) {
-        const instituteNumber = req?.instituteNumber;
+        const instituteNumber = req.user?.currentInstituteNumber;
         if (!instituteNumber || instituteNumber.trim().length === 0) {
             return res.status(400).json({
                 message: 'invalid institute number'
@@ -169,7 +171,7 @@ class InstituteController {
 
     //course table
     static async createCourseTable(req: IExtendedRequest, res: Response, next: NextFunction) {
-        const instituteNumber = req?.instituteNumber;
+        const instituteNumber = req.user?.currentInstituteNumber;
         if (!instituteNumber || instituteNumber.trim().length === 0) {
             return res.status(400).json({
                 message: 'invalid institute number'
@@ -178,15 +180,13 @@ class InstituteController {
         try {
             await sequelize.query(`
                 CREATE TABLE IF NOT EXISTS course_${instituteNumber}(
-                    id VARCHAR(36) DEFAULT  PRIMARY KEY (UUID()),
+                    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
                     courseName VARCHAR(255) NOT NULL,
                     courseDescription VARCHAR(255),
                     coursePrice VARCHAR(255),
                     courseDuration VARCHAR(100),
                     courseLevel ENUM('beginner','intermediate','advance') NOT NULL,
                     courseThumbnail VARCHAR(255),
-                    courseInstructor TEXT,
-                    courseSyllabus TEXT,
                     teacher_id VARCHAR(36),
                     category_id VARCHAR(36),
                     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
@@ -206,7 +206,7 @@ class InstituteController {
     //course chapter table 
     static async createCourseChapterTable(req: IExtendedRequest, res: Response) {
         console.log("course chapter table triggered");
-        const instituteNumber = req?.instituteNumber
+        const instituteNumber = req.user?.currentInstituteNumber;
         if (!instituteNumber || instituteNumber.trim().length === 0) {
             return res.status(400).json({
                 message: 'invalid institute number'

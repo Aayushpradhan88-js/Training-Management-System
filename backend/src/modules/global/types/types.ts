@@ -2,9 +2,9 @@ import { Request } from "express";
 
 interface IExtendedRequest extends Request {
     user?: {
-        id: string
+        id: string,
+        currentInstituteNumber?: string
     }
-    instituteNumber?: string
 }
 
 export default IExtendedRequest;

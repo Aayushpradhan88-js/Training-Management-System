@@ -19,12 +19,17 @@ class UserVerification {
                 };
 
                 //verifying is user existes or not 
-                const userData = await User.findByPk(decoded.id);
+                const userData = await User.findByPk(decoded.id,{
+                    attributes: ['id', 'currentInstituteNumber']
+                });
                 if (!userData) {
                     return res.status(401).json({ message: "Invalid user" })
                 };
 
-                req.user = userData;
+                req.user = {
+                    'id': userData.id,
+                    'currentInstituteNumber': userData.currentInstituteNumber
+                }
                 next();
             });
         } catch (error) {
