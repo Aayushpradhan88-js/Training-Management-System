@@ -19,6 +19,7 @@
 6. Better error handling 
 
 7. Course controller TESTING
-Passwords:
 
+8. Add teacher id and category id at course table located in institute constoller
+Passwords:
  "password": "Sabin2025Nepal"
