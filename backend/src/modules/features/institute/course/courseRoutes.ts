@@ -7,7 +7,10 @@ const courseRouter = express.Router();
 
 courseRouter.route("/").post(
     UserVerification.userAuthorizationAccessVerification,
-    GlobalErrorHandler.asyncErrorHandler(CourseController.createCourse)
+    GlobalErrorHandler.asyncErrorHandler(CourseController.createCourse),
+    GlobalErrorHandler.asyncErrorHandler(CourseController.getAllCourses),
+    GlobalErrorHandler.asyncErrorHandler(CourseController.getSingleCourse),
+    GlobalErrorHandler.asyncErrorHandler(CourseController.deleteCourse)
 )
 
 export default courseRouter;
