@@ -38,3 +38,5 @@ class CourseController {
         return res.status(200).json({message: "course created successfully"});
     };
 };
+
+export default CourseController;
