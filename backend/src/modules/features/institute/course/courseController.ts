@@ -60,16 +60,29 @@ class CourseController {
         if(!currentInstituteNumber || currentInstituteNumber.trim().length === 0){
             return res.status(400).json({errorMessage: "Invalid institute number"});
         };
-        await sequelize.query(`SELECT * FROM course_${currentInstituteNumber}`);
-    }
+        const fetchedData = await sequelize.query(`SELECT * FROM course_${currentInstituteNumber}`);
+
+        return res.status(200).json({ 
+            message: "All courses fetched successfully",
+            data: fetchedData
+        });
+    };
 
     //single course
     static async getSingleCourse(req: IExtendedRequest, res: Response){
         const currentInstituteNumber = req.user?.currentInstituteNumber;
+        const courseId = req.params.id;
         if(!currentInstituteNumber || currentInstituteNumber.trim().length === 0){
             return res.status(400).json({errorMessage: "Invalid institute number"});
         };
-        await sequelize.query(`SELECT * FROM course_${currentInstituteNumber}`);
+        const singleCourse = await sequelize.query(`SELECT * FROM course_${currentInstituteNumber} WHERE id=?`,{
+            replacements: [courseId]
+        });
+
+         return res.status(200).json({ 
+            message: "All courses fetched successfully",
+            data: singleCourse
+        });
 
     }
 

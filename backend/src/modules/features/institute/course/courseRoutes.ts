@@ -5,12 +5,17 @@ import UserVerification from '../../../global/middleware/authMiddleware';
 
 const courseRouter = express.Router();
 
-courseRouter.route("/").post(
-    UserVerification.userAuthorizationAccessVerification,
-    GlobalErrorHandler.asyncErrorHandler(CourseController.createCourse),
-    GlobalErrorHandler.asyncErrorHandler(CourseController.getAllCourses),
-    GlobalErrorHandler.asyncErrorHandler(CourseController.getSingleCourse),
-    GlobalErrorHandler.asyncErrorHandler(CourseController.deleteCourse)
-)
+courseRouter.route("/")
+    .post(UserVerification.userAuthorizationAccessVerification,
+        GlobalErrorHandler.asyncErrorHandler(CourseController.createCourse))
+    .get(UserVerification.userAuthorizationAccessVerification,
+        GlobalErrorHandler.asyncErrorHandler(CourseController.getAllCourses))
+
+courseRouter.route("/:id")
+    .post(UserVerification.userAuthorizationAccessVerification,
+        GlobalErrorHandler.asyncErrorHandler(CourseController.deleteCourse))
+    .get(UserVerification.userAuthorizationAccessVerification,
+        GlobalErrorHandler.asyncErrorHandler(CourseController.getSingleCourse))
+
 
 export default courseRouter;
