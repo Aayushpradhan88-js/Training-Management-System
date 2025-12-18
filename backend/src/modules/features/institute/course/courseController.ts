@@ -61,7 +61,6 @@ class CourseController {
             return res.status(400).json({errorMessage: "Invalid institute number"});
         };
         await sequelize.query(`SELECT * FROM course_${currentInstituteNumber}`);
-
     }
 
     //single course
