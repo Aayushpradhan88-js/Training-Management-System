@@ -22,6 +22,8 @@
 
 # PROJECT REPORT
 
+RULE - BUILD FASTER, SHIP FASTER, SCALE LATER
+
 1. ✅ Database connection  
 2. ✅ Global Error Handler Function for whole project 
 3. File Upload Integration
