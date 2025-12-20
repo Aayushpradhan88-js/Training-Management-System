@@ -20,16 +20,19 @@
   controller
 
 
-What are the Project Completion Report
+# PROJECT REPORT
 
 1. ✅ Database connection  
 2. ✅ Global Error Handler Function for whole project 
 3. File Upload Integration
+4. ✅ User Verification Middleware
 3. Completed 
             1a Auth 
-              - Routes (register, login, {logout, forget - future})
-            2b ✅ Institute 
-              - Routes Overview (CREATE - institute, teacher, student, course, coursetable)
+              - Routes & Controller (register, login, {logout, forget - future})
+            2b Institute 
+              - ✅ Routes & Controller Overview (CREATE - institute, teacher, student, course, coursetable)
+              - ✅ Database model
             3c Course
-              - Routes (COURSE - create, getall, deletespecific, getspecific {update - future})
+              - Routes & Controller (COURSE - create, getall, deletespecific, getspecific {update - future})
+              - ✅ Database model
             

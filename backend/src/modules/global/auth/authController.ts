@@ -29,8 +29,8 @@ class AuthController {
         });
 
         return res.status(200).json({
-            message: "user successfully registered",
-            datas: data
+            datas: data,
+            message: "user successfully registered"
         });
     };
 
@@ -82,9 +82,8 @@ class AuthController {
         // console.log('User ID:', user.id);
 
         return res.status(200).json({
-
-            message: "User loggedin successfully!!",
-            datas: token
+            datas: token,
+            message: "User loggedin successfully!!"
         });
     };
 };

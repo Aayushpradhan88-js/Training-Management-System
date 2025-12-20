@@ -97,9 +97,9 @@ class CourseController {
             replacements: [courseId]
         });
 
-         return res.status(200).json({ 
-            message: "Course deleted successfully",
-            data: deletedCourse
+        return res.status(200).json({
+            data: deletedCourse,
+            message: "Course deleted successfully"
         });
     };
 };
