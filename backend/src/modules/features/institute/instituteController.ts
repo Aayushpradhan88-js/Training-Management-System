@@ -205,7 +205,7 @@ class InstituteController {
 
     //course chapter table 
     static async createCourseChapterTable(req: IExtendedRequest, res: Response) {
-        console.log("course chapter table triggered");
+        // console.log("course chapter table triggered");
         const instituteNumber = req.user?.currentInstituteNumber;
         if (!instituteNumber || instituteNumber.trim().length === 0) {
             return res.status(400).json({

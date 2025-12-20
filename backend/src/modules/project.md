@@ -22,9 +22,14 @@
 
 What are the Project Completion Report
 
-1. Database connection ✅ 
-2. Completed 
+1. ✅ Database connection  
+2. ✅ Global Error Handler Function for whole project 
+3. File Upload Integration
+3. Completed 
             1a Auth 
-              -Routes (register, login, {logout, forget - future})
-            2a Institute 
-              - Routes Overview ()
+              - Routes (register, login, {logout, forget - future})
+            2b ✅ Institute 
+              - Routes Overview (CREATE - institute, teacher, student, course, coursetable)
+            3c Course
+              - Routes (COURSE - create, getall, deletespecific, getspecific {update - future})
+            

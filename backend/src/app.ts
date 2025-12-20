@@ -7,10 +7,13 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// console.log("✅ step: AUTH ROUTER TRIGGERED")
 app.use("/api/auth", authRouter);
 
-// console.log("✅ step 2: INSTITUTE ROUTER")
+// console.log("✅ step: INSTITUTE ROUTER TRIGGERED")
 app.use("/api/institute", instituteRouter);
+
+// console.log("✅ step: COURSE ROUTER TRIGGERED")
 app.use("/api/institute/course", courseRouter);
 
 export default app;
