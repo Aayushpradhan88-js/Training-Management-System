@@ -29,8 +29,8 @@ class CourseController {
         };
 
         const currentInstituteNumber = req.user?.currentInstituteNumber;
-        if(!currentInstituteNumber || currentInstituteNumber.trim().length === 0){
-            return res.status(400).json({errorMessage: "Invalid institute number"});
+        if (!currentInstituteNumber || currentInstituteNumber.trim().length === 0) {
+            return res.status(400).json({ errorMessage: "Invalid institute number" });
         };
         // console.log("✅ Full req.user:", req.user);
         // console.log("✅ Type of req.user:", typeof req.user);
@@ -55,46 +55,53 @@ class CourseController {
     };
 
     //all course
-    static async getAllCourses(req: IExtendedRequest, res: Response){
+    static async getAllCourses(req: IExtendedRequest, res: Response) {
         const currentInstituteNumber = req.user?.currentInstituteNumber;
-        if(!currentInstituteNumber || currentInstituteNumber.trim().length === 0){
-            return res.status(400).json({errorMessage: "Invalid institute number"});
+        if (!currentInstituteNumber || currentInstituteNumber.trim().length === 0) {
+            return res.status(400).json({ errorMessage: "Invalid institute number" });
         };
         const fetchedData = await sequelize.query(`SELECT * FROM course_${currentInstituteNumber}`);
 
-        return res.status(200).json({ 
+        return res.status(200).json({
             message: "All courses fetched successfully",
             data: fetchedData
         });
     };
 
     //single course
-    static async getSingleCourse(req: IExtendedRequest, res: Response){
+    static async getSingleCourse(req: IExtendedRequest, res: Response) {
         const currentInstituteNumber = req.user?.currentInstituteNumber;
         const courseId = req.params.id;
-        if(!currentInstituteNumber || currentInstituteNumber.trim().length === 0){
-            return res.status(400).json({errorMessage: "Invalid institute number"});
+        if (!currentInstituteNumber || currentInstituteNumber.trim().length === 0) {
+            return res.status(400).json({ errorMessage: "Invalid institute number" });
         };
-        const singleCourse = await sequelize.query(`SELECT * FROM course_${currentInstituteNumber} WHERE id=?`,{
+        const singleCourse = await sequelize.query(`SELECT * FROM course_${currentInstituteNumber} WHERE id=?`, {
             replacements: [courseId]
         });
 
-         return res.status(200).json({ 
-            message: "All courses fetched successfully",
+        return res.status(200).json({
+            message: "Course fetched successfully",
             data: singleCourse
         });
 
     }
 
     //delete course
-    static async deleteCourse(req: IExtendedRequest, res: Response){
+    static async deleteCourse(req: IExtendedRequest, res: Response) {
         const currentInstituteNumber = req.user?.currentInstituteNumber;
-        if(!currentInstituteNumber || currentInstituteNumber.trim().length === 0){
-            return res.status(400).json({errorMessage: "Invalid institute number"});
+        const courseId = req.params.id;
+        if (!currentInstituteNumber || currentInstituteNumber.trim().length === 0) {
+            return res.status(400).json({ errorMessage: "Invalid institute number" });
         };
-        await sequelize.query(`SELECT * FROM course_${currentInstituteNumber}`);
+        const deletedCourse = await sequelize.query(`DELETE FROM course_${currentInstituteNumber} WHERE id=?`, {
+            replacements: [courseId]
+        });
 
-    }
+         return res.status(200).json({ 
+            message: "Course deleted successfully",
+            data: deletedCourse
+        });
+    };
 };
 
 export default CourseController;
