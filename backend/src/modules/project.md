@@ -1,25 +1,30 @@
 # TASK
 
-✅
-1. user table bhitra current institute_id & role update garne  ✅
-    institute-admin maa.
-  ✅
+1.✅ user table bhitra current institute_id & role update garne institute-admin maa.
   
-2. histroy table banaunee, kun user active xaa kati ota 
-  institute banayo, column ko model _id, user_id(reference linee), institute_number. ✅
+2.✅ histroy table banaunee, kun user active xaa kati ota 
+  institute banayo, column ko model _id, user_id(reference linee), institute_number.
 
-3. jab user institute banauxa parallely teacher, student
-    course table create hunu paro same _id bata.
-  ✅
-4. change functional code to oop based code.
-  ✅
+3.✅ jab user institute banauxa parallely teacher, student
+  course table create hunu paro same _id bata.
 
-5. Course Controller add all CRUD OPERATIONS 
+4.✅ change functional code to oop based code.
 
-6. Better error handling 
+5.✅ Course Controller add all CRUD OPERATIONS 
 
-7. Course controller (CRUD) TESTING
+6.✅ Better error handling 
 
-8. Add teacher id and category id at course table located in institute constoller
-Passwords:
- "password": "Sabin2025Nepal"
+7.✅ Course controller (CRUD) TESTING - Remaining DELETE + SINGLE COURSE
+
+8. Add teacher id and category id at course table located in institute
+  controller
+
+
+What are the Project Completion Report
+
+1. Database connection ✅ 
+2. Completed 
+            1a Auth 
+              -Routes (register, login, {logout, forget - future})
+            2a Institute 
+              - Routes Overview ()
