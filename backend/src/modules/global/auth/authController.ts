@@ -17,25 +17,21 @@ class AuthController {
         if (!username || !email || !password) {
             return res.status(401).json({
                 message: "Fill all the required fields"
-            })
-        };
-
-        try {
-            const hashedPassword = await bcrypt.hash(password, 12);
-
-            const data = await User.create({
-                username,
-                email,
-                password: hashedPassword
             });
-
-            return res.status(200).json({
-                message: "user successfully registered",
-                datas: data
-            })
-        } catch (error) {
-            console.error("error triggered", (error as Error).stack);
         };
+
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        const data = await User.create({
+            username,
+            email,
+            password: hashedPassword
+        });
+
+        return res.status(200).json({
+            message: "user successfully registered",
+            datas: data
+        });
     };
 
     //login 
@@ -86,8 +82,8 @@ class AuthController {
         // console.log('User ID:', user.id);
 
         return res.status(200).json({
-            token,
-            message: "User loggedin successfully!!"
+            message: "User loggedin successfully!!",
+            datas: token
         });
     };
 };
