@@ -26,7 +26,7 @@ RULE - BUILD FASTER, SHIP FASTER, SCALE LATER
 
 1. ✅ Database connection  
 2. ✅ Global Error Handler Function for whole project 
-3. File Upload Integration
+3. File Upload Integration at cloudinary
 4. ✅ User Verification Middleware
 3. Completed 
             1a Auth 
