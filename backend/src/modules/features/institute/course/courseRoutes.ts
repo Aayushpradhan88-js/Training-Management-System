@@ -2,6 +2,7 @@ import express from 'express'
 import CourseController from './courseController';
 import GlobalErrorHandler from '../../../global/services/asyncErrorHandler';
 import UserVerification from '../../../global/middleware/authMiddleware';
+import {multer, stor} from '../../../global/middleware/multerMiddleware'
 
 const courseRouter = express.Router();
 
