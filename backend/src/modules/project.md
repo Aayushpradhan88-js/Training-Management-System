@@ -35,6 +35,6 @@ RULE - BUILD FASTER, SHIP FASTER, SCALE LATER
               - ✅ Routes & Controller Overview (CREATE - institute, teacher, student, course, coursetable)
               - ✅ Database model
             3c Course
-              - Routes & Controller (COURSE - create, getall, deletespecific, getspecific {update - future})
+              - Routes & Controller (COURSE - create, getall, deletespecific, getspecific ,categoryTable{update - future})
               - ✅ Database model
             

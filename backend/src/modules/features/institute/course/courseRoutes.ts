@@ -13,7 +13,6 @@ courseRouter.route("/")
     .get(UserVerification.userAuthorizationAccessVerification,
         GlobalErrorHandler.asyncErrorHandler(CourseController.getAllCourses))
 
-
 courseRouter.route("/:id")
     .post(UserVerification.userAuthorizationAccessVerification,
         GlobalErrorHandler.asyncErrorHandler(CourseController.deleteCourse))
