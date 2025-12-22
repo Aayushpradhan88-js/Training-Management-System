@@ -2,6 +2,7 @@ import { Request } from 'express'
 import multer from 'multer'
 import { cloudinary, storage } from '../services/CloudinaryService'
 
+// console.log("✅Cloudinary middleware triggered")
 const upload = multer(
     {
         storage: storage,

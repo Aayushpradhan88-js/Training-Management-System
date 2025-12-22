@@ -6,9 +6,10 @@ import upload from '../../../global/middleware/CloudinaryMiddleware';
 
 const courseRouter = express.Router();
 
+// console.log("✅Router triggered")
 courseRouter.route("/")
     .post(UserVerification.userAuthorizationAccessVerification,
-        upload.single('courseThumbnail'),
+        upload.single('courseThumbnail'), //upload image
         GlobalErrorHandler.asyncErrorHandler(CourseController.createCourse))
     .get(UserVerification.userAuthorizationAccessVerification,
         GlobalErrorHandler.asyncErrorHandler(CourseController.getAllCourses))

@@ -28,7 +28,7 @@ class CourseController {
         };
 
         const courseThumbnail = req.file ? req.file.path : null
-        console.log('courseThumbnail', courseThumbnail);
+        // console.log('courseThumbnail', courseThumbnail);
 
         const currentInstituteNumber = req.user?.currentInstituteNumber;
         if (!currentInstituteNumber || currentInstituteNumber.trim().length === 0) {
@@ -53,7 +53,9 @@ class CourseController {
             ]
         });
         // console.log({ instertId, affectedRow });
-        return res.status(200).json({ message: "course created successfully" });
+        return res.status(200).json({
+            datas: courseThumbnail,
+            message: "course created successfully" });
     };
 
     //all course
