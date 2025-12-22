@@ -40,15 +40,15 @@ class CourseController {
         // const [instertId, affectedRow] = 
         await sequelize.query(`
             INSERT INTO course_${currentInstituteNumber}(
-                coursePrice, 
                 courseName,
+                coursePrice, 
                 courseDescription, 
                 courseDuration, 
                 courseLevel, 
                 courseThumbnail
             ) VALUES(?,?,?,?,?,?)`, {
             type: QueryTypes.INSERT,
-            replacements: [coursePrice, courseName, courseDescription, courseDuration, courseLevel, courseThumbnail,
+            replacements: [ courseName,coursePrice, courseDescription, courseDuration, courseLevel, courseThumbnail,
                 // categoryId - in qyery add at future
             ]
         });
