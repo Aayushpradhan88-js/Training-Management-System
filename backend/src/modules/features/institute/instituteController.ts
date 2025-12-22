@@ -238,7 +238,7 @@ class InstituteController {
         };
 
         await sequelize.query(`
-            CREATE TABLE IF NOT EXISTS institute_${instituteNumber}(
+            CREATE TABLE IF NOT EXISTS category_${instituteNumber}(
                 id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
                 categoryName VARCHAR(100) NOT NULL, 
                 categoryDescription TEXT,
