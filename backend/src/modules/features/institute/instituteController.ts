@@ -225,6 +225,11 @@ class InstituteController {
             `);
 
         return res.status(200).json({ message: "institute created!!" });
+    };
+
+    //category Table
+    static async createCategoryTable(req:IExtendedRequest, res:Response) {
+        
     }
 };
 
