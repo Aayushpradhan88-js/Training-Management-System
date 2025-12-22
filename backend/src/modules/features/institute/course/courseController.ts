@@ -12,7 +12,6 @@ class CourseController {
             courseDescription,
             courseDuration,
             courseLevel,
-            courseThumbnail,
             //  categoryId
         } = req.body;
         // console.log("✅step 1: All data from the body", courseName, courseDescription,
@@ -27,6 +26,9 @@ class CourseController {
                 errorMessage: 'fill all the required fields'
             });
         };
+
+        const courseThumbnail = req.file ? req.file.path : null
+        console.log('courseThumbnail', courseThumbnail);
 
         const currentInstituteNumber = req.user?.currentInstituteNumber;
         if (!currentInstituteNumber || currentInstituteNumber.trim().length === 0) {
