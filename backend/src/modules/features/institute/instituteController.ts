@@ -85,11 +85,11 @@ class InstituteController {
             user.currentInstituteNumber = String(instituteNumber);
             user.roles = "admin"
             await user?.save();
-            if(req.user){
+            if (req.user) {
                 req.user.currentInstituteNumber = String(instituteNumber)
             }
             next()
-            ;
+                ;
         } catch (error) {
             console.error("✗ Server Error: Failed to create institute table:", (error as Error).stack);
             return res.status(500).json({
@@ -228,9 +228,27 @@ class InstituteController {
     };
 
     //category Table
-    static async createCategoryTable(req:IExtendedRequest, res:Response) {
-        
-    }
+    static async createCategoryTable(req: IExtendedRequest, res: Response, next:NextFunction) {
+        // console.log("category table triggered");
+        const instituteNumber = req.user?.currentInstituteNumber;
+        if (!instituteNumber || instituteNumber.trim().length === 0) {
+            return res.status(400).json({
+                message: 'invalid institute number'
+            });
+        };
+
+        await sequelize.query(`
+            CREATE TABLE IF NOT EXISTS institute_${instituteNumber}(
+                id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+                categoryName VARCHAR(100) NOT NULL, 
+                categoryDescription TEXT,
+                createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+                updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            )
+        `);
+
+        next();
+    };
 };
 
 export default InstituteController;

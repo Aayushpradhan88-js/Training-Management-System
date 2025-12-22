@@ -11,6 +11,7 @@ instituteRouter.route("/").post(
     InstituteController.createTeacherTable,
     InstituteController.createStudentTable,
     InstituteController.createCourseTable,
+    InstituteController.createCategoryTable,
     GlobalErrorHandler.asyncErrorHandler(InstituteController.createCourseChapterTable)
 );
 
