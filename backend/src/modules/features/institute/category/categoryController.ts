@@ -51,7 +51,9 @@ class CategoryController {
 
         const getAllCategory = await sequelize.query(`
             SELECT * FROM category_${instituteNumber} 
-        `);
+        `,{
+            type: QueryTypes.SELECT
+        });
         if (!getAllCategory) {
             return res.status(400).json({ errorMessage: "failed to fetch data" });
         };
@@ -80,9 +82,9 @@ class CategoryController {
         };
 
         const [results] = await sequelize.query(`
-                SHOW * FROM category_${instituteNumber} WHERE id=? 
+                SELECT * FROM category_${instituteNumber} WHERE id=? 
             `, {
-            type: QueryTypes.INSERT,
+            type: QueryTypes.SELECT,
             replacements: [categoryId]
         });
 
