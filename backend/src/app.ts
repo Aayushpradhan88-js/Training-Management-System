@@ -2,6 +2,7 @@ import express from 'express'
 import authRouter from './modules/global/auth/authRouter';
 import instituteRouter from './modules/features/institute/instituteRoutes';
 import courseRouter from './modules/features/institute/course/courseRoutes';
+import categoryRoute from './modules/features/institute/category/categoryRoute';
 const app = express();
 
 app.use(express.json());
@@ -17,6 +18,6 @@ app.use("/api/institute", instituteRouter);
 app.use("/api/institute/course", courseRouter);
 
 // console.log("✅ step: CATEGORY ROUTER TRIGGERED")
-app.use("/api/institute/category", courseRouter);
+app.use("/api/institute/category", categoryRoute);
 
 export default app;
