@@ -35,6 +35,7 @@ class CategoryController {
                 institute: instituteNumber,
                 categoryName: categoryName
             },
+            success:true,
             message: `Successfully created ${categoryName} category`
         });
     };
@@ -89,7 +90,7 @@ class CategoryController {
             return res.status(404).json({
                 message: 'Category not found'
             });
-        }
+        };
 
         return res.status(200).json({
             datas: results,
@@ -134,7 +135,7 @@ class CategoryController {
             return res.status(404).json({
                 message: 'Category not found'
             });
-        }
+        };
 
         return res.status(200).json({
             datas: results,
@@ -177,5 +178,5 @@ class CategoryController {
             success: true,
             message: "category updated fetched successfully"
         });
-    }
+    };
 };
