@@ -15,6 +15,18 @@ const categories = [
         categoryName: "devops_and_deployment",
         categoryDescription: "DevOps and deployment covers tools like Git, Docker, Kubernetes, CI/CD pipelines, and cloud platforms (AWS, Azure) for version control, automation, and scalable application hosting."
     },
+    {
+        categoryName: "cloud_computing",
+        categoryDescription: "Cloud computing explores services from AWS, Google Cloud, or Azure, including serverless architecture, storage, and building cloud-native applications."
+    },
+    {
+        categoryName: "microservices_architecture",
+        categoryDescription: "Microservices architecture teaches breaking monoliths into independent services, service communication (gRPC, message queues), and orchestration."
+    },
+    {
+        categoryName: "system_design",
+        categoryDescription: "System design focuses on architecting scalable, reliable systems, including distributed systems, microservices, caching strategies, and high-level design interviews."
+    }
 ];
 
 export default categories;

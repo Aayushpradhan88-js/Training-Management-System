@@ -3,6 +3,7 @@ import sequelize from "../../../database/connection";
 import IExtendedRequest from "../../global/types/types";
 import { User } from "../../../database/models/userModel";
 import RandomInstituteNumber from "../../global/services/generateRandomNumber";
+import categories from "../../seed";
 
 class InstituteController {
     //institute table
@@ -228,7 +229,7 @@ class InstituteController {
     };
 
     //category Table
-    static async createCategoryTable(req: IExtendedRequest, res: Response, next:NextFunction) {
+    static async createCategoryTable(req: IExtendedRequest, res: Response, next: NextFunction) {
         // console.log("category table triggered");
         const instituteNumber = req.user?.currentInstituteNumber;
         if (!instituteNumber || instituteNumber.trim().length === 0) {
@@ -246,6 +247,17 @@ class InstituteController {
                 updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             )
         `);
+
+        categories.forEach(async function (category) {
+            await sequelize.query(`
+                INSERT INTO category_${instituteNumber}(
+                    categoryName,
+                    categoryDescription
+                ) 
+                    VALUES(?,?)`, {
+                replacements: [category.categoryName, category.categoryDescription]
+            })
+        });
 
         next();
     };
