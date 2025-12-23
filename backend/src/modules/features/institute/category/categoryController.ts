@@ -130,7 +130,7 @@ class CategoryController {
                 WHERE id=?
             `, {
             type: QueryTypes.UPDATE,
-            replacements: [categoryId, categoryName, categoryDescription]
+            replacements: [categoryName, categoryDescription, categoryId]
         });
 
         if (!results) {
