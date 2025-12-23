@@ -57,6 +57,7 @@ class CategoryController {
 
         return res.status(200).json({
             datas: getAllCategory,
+            success: true,
             message: "All category fetched successfully"
         });
     };
@@ -91,8 +92,9 @@ class CategoryController {
         }
 
         return res.status(200).json({
+            datas: results,
             success: true,
-            data: results
+            message: "single category fetched successfully"
         });
     };
 
@@ -135,8 +137,14 @@ class CategoryController {
         }
 
         return res.status(200).json({
+            datas: results,
             success: true,
-            data: results
+            message: "category updated fetched successfully"
         });
     };
+
+    //delete category
+    static async deleteSingleCategory(req: IExtendedRequest, res: Response){
+        
+    }
 };

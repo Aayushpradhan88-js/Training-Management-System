@@ -2,7 +2,7 @@ import express from 'express'
 import CourseController from './courseController';
 import GlobalErrorHandler from '../../../global/services/asyncErrorHandler';
 import UserVerification from '../../../global/middleware/authMiddleware';
-import upload from '../../../global/middleware/CloudinaryMiddleware';
+import upload from '../../../global/middleware/cloudinaryMiddleware';
 
 const courseRouter = express.Router();
 
@@ -16,9 +16,8 @@ courseRouter.route("/")
 
 courseRouter.route("/:id")
     .post(UserVerification.userAuthorizationAccessVerification,
-        GlobalErrorHandler.asyncErrorHandler(CourseController.deleteCourse))
+        GlobalErrorHandler.asyncErrorHandler(CourseController.deleteSingleCourse))
     .get(UserVerification.userAuthorizationAccessVerification,
         GlobalErrorHandler.asyncErrorHandler(CourseController.getSingleCourse))
-
 
 export default courseRouter;
