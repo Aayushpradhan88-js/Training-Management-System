@@ -48,8 +48,16 @@ class CategoryController {
             });
         };
 
-        await sequelize.query(`
-                
-            `)
-    }
+        const getAllCategory = await sequelize.query(`
+            SELECT * FROM category_${instituteNumber} 
+        `);
+        if (!getAllCategory) {
+            return res.status(400).json({ errorMessage: "failed to fetch data" });
+        };
+
+        return res.status(200).json({
+            datas: getAllCategory,
+            message: "All category fetched successfully"
+        });
+    };
 };
