@@ -22,7 +22,7 @@ class CategoryController {
         };
 
         await sequelize.query(`
-            INSERT TO category_${instituteNumber}(
+            INSERT INTO category_${instituteNumber}(
                 categoryName,
                 categoryDescription
             ) VALUES(?,?)`, {
@@ -162,21 +162,21 @@ class CategoryController {
             });
         };
 
-        const [results] = await sequelize.query(`
+         await sequelize.query(`
                 DELETE FROM category_${instituteNumber} WHERE id=?
             `, {
             type: QueryTypes.DELETE,
             replacements: [categoryId]
         });
 
-        if (results === 0) {
-            return res.status(400).json({
-                message: 'Category not found'
-            });
-        }
+        // if (results === 0) {
+        //     return res.status(400).json({
+        //         message: 'Category not found'
+        //     });
+        // }
 
         return res.status(200).json({
-            datas: results,
+            // datas: results,
             success: true,
             message: "category updated fetched successfully"
         });
