@@ -144,7 +144,38 @@ class CategoryController {
     };
 
     //delete category
-    static async deleteSingleCategory(req: IExtendedRequest, res: Response){
-        
+    static async deleteSingleCategory(req: IExtendedRequest, res: Response) {
+        const categoryId = req.params.id;
+        if (!categoryId) {
+            return res.status(400).json({
+                message: 'invalid category Id'
+            });
+        };
+
+        const instituteNumber = req.user?.currentInstituteNumber;
+        if (!instituteNumber || instituteNumber.trim().length === 0) {
+            return res.status(400).json({
+                message: 'invalid institute number'
+            });
+        };
+
+        const [results] = await sequelize.query(`
+                DELETE FROM category_${instituteNumber} WHERE id=?
+            `, {
+            type: QueryTypes.DELETE,
+            replacements: [categoryId]
+        });
+
+        if (results === 0) {
+            return res.status(400).json({
+                message: 'Category not found'
+            });
+        }
+
+        return res.status(200).json({
+            datas: results,
+            success: true,
+            message: "category updated fetched successfully"
+        });
     }
 };
