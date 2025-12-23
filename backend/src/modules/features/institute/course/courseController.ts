@@ -64,11 +64,15 @@ class CourseController {
         if (!currentInstituteNumber || currentInstituteNumber.trim().length === 0) {
             return res.status(400).json({ errorMessage: "Invalid institute number" });
         };
+        
         const fetchedData = await sequelize.query(`SELECT * FROM course_${currentInstituteNumber}`);
+        if(!fetchedData){
+             return res.status(400).json({ errorMessage: "failed to fetch data" });
+        };
 
         return res.status(200).json({
-            message: "All courses fetched successfully",
-            data: fetchedData
+            datas: fetchedData,
+            message: "All courses fetched successfully"
         });
     };
 
