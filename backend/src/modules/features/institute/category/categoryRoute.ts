@@ -4,7 +4,7 @@ import CategoryController from "./categoryController";
 import UserVerification from "../../../global/middleware/authMiddleware";
 const categoryRoute = express.Router()
 
-categoryRoute.route("/category")
+categoryRoute.route("/")
     .get(UserVerification.userAuthorizationAccessVerification,
         GlobalErrorHandler.asyncErrorHandler(CategoryController.getAllCategory));
       
