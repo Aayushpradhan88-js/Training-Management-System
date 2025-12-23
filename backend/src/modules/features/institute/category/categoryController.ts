@@ -35,7 +35,7 @@ class CategoryController {
                 institute: instituteNumber,
                 categoryName: categoryName
             },
-            success:true,
+            success: true,
             message: `Successfully created ${categoryName} category`
         });
     };
@@ -51,7 +51,7 @@ class CategoryController {
 
         const getAllCategory = await sequelize.query(`
             SELECT * FROM category_${instituteNumber} 
-        `,{
+        `, {
             type: QueryTypes.SELECT
         });
         if (!getAllCategory) {
@@ -124,26 +124,52 @@ class CategoryController {
             });
         };
 
-        const [results] = await sequelize.query(`
-                UPDATE category_${instituteNumber} 
-                SET categoryName=?, categoryDescription=?, updatedAt=NOW()
-                WHERE id=?
-            `, {
+        // const [results] = await sequelize.query(`
+        //         UPDATE category_${instituteNumber} 
+        //         SET categoryName=?, categoryDescription=?, updatedAt=NOW()
+        //         WHERE id=?
+        //     `, {
+        //     type: QueryTypes.UPDATE,
+        //     replacements: [categoryName, categoryDescription, categoryId]
+        // });
+
+        // console.log(results, "results");
+
+        // if (results === 0) {
+        //     return res.status(404).json({
+        //         message: 'Category not found'
+        //     });
+        // };
+
+        const updateResult = await sequelize.query(`
+    UPDATE category_${instituteNumber} 
+    SET categoryName=?, categoryDescription=?, updatedAt=NOW()
+    WHERE id=?
+`, {
             type: QueryTypes.UPDATE,
             replacements: [categoryName, categoryDescription, categoryId]
         });
 
-        if (!results) {
-            return res.status(404).json({
-                message: 'Category not found'
-            });
-        };
+        console.log("====== DEBUG INFO ======");
+        console.log("Full result:", JSON.stringify(updateResult, null, 2));
+        console.log("Result[0]:", updateResult[0]);
+        console.log("Result[1]:", updateResult[1]);
+        console.log("========================");
 
+        // Temporary - always return success to see what's in the result
         return res.status(200).json({
-            datas: results,
-            success: true,
-            message: "category updated fetched successfully"
+            debug: {
+                fullResult: updateResult,
+                first: updateResult[0],
+                second: updateResult[1]
+            }
         });
+
+        // return res.status(200).json({
+        //     datas: results,
+        //     success: true,
+        //     message: "category updated fetched successfully"
+        // });
     };
 
     //delete category
@@ -162,7 +188,7 @@ class CategoryController {
             });
         };
 
-         await sequelize.query(`
+        await sequelize.query(`
                 DELETE FROM category_${instituteNumber} WHERE id=?
             `, {
             type: QueryTypes.DELETE,
