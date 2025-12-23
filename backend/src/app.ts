@@ -16,4 +16,7 @@ app.use("/api/institute", instituteRouter);
 // console.log("✅ step: COURSE ROUTER TRIGGERED")
 app.use("/api/institute/course", courseRouter);
 
+// console.log("✅ step: CATEGORY ROUTER TRIGGERED")
+app.use("/api/institute/category", courseRouter);
+
 export default app;
