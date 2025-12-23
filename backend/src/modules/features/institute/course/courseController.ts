@@ -48,14 +48,15 @@ class CourseController {
                 courseThumbnail
             ) VALUES(?,?,?,?,?,?)`, {
             type: QueryTypes.INSERT,
-            replacements: [ courseName,coursePrice, courseDescription, courseDuration, courseLevel, courseThumbnail,
+            replacements: [courseName, coursePrice, courseDescription, courseDuration, courseLevel, courseThumbnail,
                 // categoryId - in qyery add at future
             ]
         });
         // console.log({ instertId, affectedRow });
         return res.status(200).json({
             datas: courseThumbnail,
-            message: "course created successfully" });
+            message: "course created successfully"
+        });
     };
 
     //all course
@@ -65,9 +66,13 @@ class CourseController {
             return res.status(400).json({ errorMessage: "Invalid institute number" });
         };
 
-        const fetchedData = await sequelize.query(`SELECT * FROM course_${currentInstituteNumber}`);
-        if(!fetchedData){
-             return res.status(400).json({ errorMessage: "failed to fetch data" });
+        const fetchedData = await sequelize.query(`
+            SELECT * FROM course_${currentInstituteNumber}
+            `, {
+            type: QueryTypes.SELECT
+        });
+        if (!fetchedData) {
+            return res.status(400).json({ errorMessage: "failed to fetch data" });
         };
 
         return res.status(200).json({
@@ -83,9 +88,12 @@ class CourseController {
         if (!currentInstituteNumber || currentInstituteNumber.trim().length === 0) {
             return res.status(400).json({ errorMessage: "Invalid institute number" });
         };
-        const singleCourse = await sequelize.query(`SELECT * FROM course_${currentInstituteNumber} WHERE id=?`, {
-            replacements: [courseId]
-        });
+        const singleCourse = await sequelize.query(`
+            SELECT * FROM course_${currentInstituteNumber} WHERE id=?`
+            , {
+                type: QueryTypes.SELECT,
+                replacements: [courseId]
+            });
 
         return res.status(200).json({
             message: "Course fetched successfully",
@@ -101,9 +109,12 @@ class CourseController {
         if (!currentInstituteNumber || currentInstituteNumber.trim().length === 0) {
             return res.status(400).json({ errorMessage: "Invalid institute number" });
         };
-        const deletedCourse = await sequelize.query(`DELETE FROM course_${currentInstituteNumber} WHERE id=?`, {
-            replacements: [courseId]
-        });
+        const deletedCourse = await sequelize.query(`
+            DELETE FROM course_${currentInstituteNumber} WHERE id=?`
+            , {
+                type: QueryTypes.DELETE,
+                replacements: [courseId]
+            });
 
         return res.status(200).json({
             data: deletedCourse,

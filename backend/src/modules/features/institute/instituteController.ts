@@ -4,6 +4,7 @@ import IExtendedRequest from "../../global/types/types";
 import { User } from "../../../database/models/userModel";
 import RandomInstituteNumber from "../../global/services/generateRandomNumber";
 import categories from "../../seed";
+import { QueryTypes } from "sequelize";
 
 class InstituteController {
     //institute table
@@ -255,6 +256,7 @@ class InstituteController {
                     categoryDescription
                 ) 
                     VALUES(?,?)`, {
+                type: QueryTypes.INSERT,
                 replacements: [category.categoryName, category.categoryDescription]
             });
         });
