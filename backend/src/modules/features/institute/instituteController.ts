@@ -256,7 +256,7 @@ class InstituteController {
                 ) 
                     VALUES(?,?)`, {
                 replacements: [category.categoryName, category.categoryDescription]
-            })
+            });
         });
 
         next();
