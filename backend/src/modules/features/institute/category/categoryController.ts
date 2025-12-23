@@ -95,4 +95,39 @@ class CategoryController {
             data: results
         });
     };
+
+    //update category
+    static async updateSingleCategory(req: IExtendedRequest, res: Response) {
+        const categoryId = req.params.id;
+        if (!categoryId) {
+            return res.status(400).json({
+                message: 'invalid category Id'
+            });
+        };
+
+        const instituteNumber = req.user?.currentInstituteNumber;
+        if (!instituteNumber || instituteNumber.trim().length === 0) {
+            return res.status(400).json({
+                message: 'invalid institute number'
+            });
+        };
+
+        const [results] = await sequelize.query(`
+                SHOW * FROM category_${instituteNumber} WHERE id=? 
+            `, {
+            type: QueryTypes.INSERT,
+            replacements: [categoryId]
+        });
+
+        if (!results) {
+            return res.status(404).json({
+                message: 'Category not found'
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: results
+        });
+    };
 };
