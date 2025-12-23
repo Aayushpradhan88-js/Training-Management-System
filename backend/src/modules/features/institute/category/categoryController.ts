@@ -112,11 +112,20 @@ class CategoryController {
             });
         };
 
+        const { categoryName, categoryDescription } = req.body;
+        if (!categoryName || !categoryDescription) {
+            return res.status(400).json({
+                message: 'fill all the required fields'
+            });
+        };
+
         const [results] = await sequelize.query(`
-                SHOW * FROM category_${instituteNumber} WHERE id=? 
+                UPDATE category_${instituteNumber} 
+                SET categoryName=?, categoryDescription=?, updatedAt=NOW()
+                WHERE id=?
             `, {
-            type: QueryTypes.INSERT,
-            replacements: [categoryId]
+            type: QueryTypes.UPDATE,
+            replacements: [categoryId, categoryName, categoryDescription]
         });
 
         if (!results) {
