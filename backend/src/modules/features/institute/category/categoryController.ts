@@ -178,7 +178,7 @@ class CategoryController {
         return res.status(200).json({
             // datas: results,
             success: true,
-            message: "category updated fetched successfully"
+            message: "category deleted successfully"
         });
     };
 };

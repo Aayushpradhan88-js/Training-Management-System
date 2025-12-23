@@ -7,7 +7,7 @@ const categoryRoute = express.Router()
 categoryRoute.route("/category")
     .get(UserVerification.userAuthorizationAccessVerification,
         GlobalErrorHandler.asyncErrorHandler(CategoryController.getAllCategory));
-
+      
 categoryRoute.route("/create-category")
     .post(UserVerification.userAuthorizationAccessVerification,
         GlobalErrorHandler.asyncErrorHandler(CategoryController.createCategory));
@@ -19,7 +19,7 @@ categoryRoute.route("/:id")
     .get(UserVerification.userAuthorizationAccessVerification,
         GlobalErrorHandler.asyncErrorHandler(CategoryController.getSingleCategory))
 
-    .post(UserVerification.userAuthorizationAccessVerification,
+    .delete(UserVerification.userAuthorizationAccessVerification,
         GlobalErrorHandler.asyncErrorHandler(CategoryController.deleteSingleCategory))
 
 export default categoryRoute;
