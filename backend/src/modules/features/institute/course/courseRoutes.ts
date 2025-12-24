@@ -16,7 +16,7 @@ courseRouter.route("/")
         GlobalErrorHandler.asyncErrorHandler(CourseController.getAllCourses))
 
 courseRouter.route("/:id")
-    .post(UserVerification.userAuthorizationAccessVerification,
+    .delete(UserVerification.userAuthorizationAccessVerification,
         GlobalErrorHandler.asyncErrorHandler(CourseController.deleteSingleCourse))
         
     .get(UserVerification.userAuthorizationAccessVerification,
