@@ -124,52 +124,26 @@ class CategoryController {
             });
         };
 
-        // const [results] = await sequelize.query(`
-        //         UPDATE category_${instituteNumber} 
-        //         SET categoryName=?, categoryDescription=?, updatedAt=NOW()
-        //         WHERE id=?
-        //     `, {
-        //     type: QueryTypes.UPDATE,
-        //     replacements: [categoryName, categoryDescription, categoryId]
-        // });
-
-        // console.log(results, "results");
-
-        // if (results === 0) {
-        //     return res.status(404).json({
-        //         message: 'Category not found'
-        //     });
-        // };
-
-        const updateResult = await sequelize.query(`
-    UPDATE category_${instituteNumber} 
-    SET categoryName=?, categoryDescription=?, updatedAt=NOW()
-    WHERE id=?
-`, {
+        const [results] = await sequelize.query(`
+                UPDATE category_${instituteNumber} 
+                SET categoryName=?, categoryDescription=?, updatedAt=NOW()
+                WHERE id=?
+            `, {
             type: QueryTypes.UPDATE,
             replacements: [categoryName, categoryDescription, categoryId]
         });
 
-        console.log("====== DEBUG INFO ======");
-        console.log("Full result:", JSON.stringify(updateResult, null, 2));
-        console.log("Result[0]:", updateResult[0]);
-        console.log("Result[1]:", updateResult[1]);
-        console.log("========================");
+        if (results === 0) {
+            return res.status(404).json({
+                message: 'Category not found'
+            });
+        };
 
-        // Temporary - always return success to see what's in the result
         return res.status(200).json({
-            debug: {
-                fullResult: updateResult,
-                first: updateResult[0],
-                second: updateResult[1]
-            }
+            datas: results,
+            success: true,
+            message: "category updated successfully"
         });
-
-        // return res.status(200).json({
-        //     datas: results,
-        //     success: true,
-        //     message: "category updated fetched successfully"
-        // });
     };
 
     //delete category
