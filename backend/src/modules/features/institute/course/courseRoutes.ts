@@ -11,12 +11,14 @@ courseRouter.route("/")
     .post(UserVerification.userAuthorizationAccessVerification,
         upload.single('courseThumbnail'), //upload image
         GlobalErrorHandler.asyncErrorHandler(CourseController.createCourse))
+
     .get(UserVerification.userAuthorizationAccessVerification,
         GlobalErrorHandler.asyncErrorHandler(CourseController.getAllCourses))
 
 courseRouter.route("/:id")
     .post(UserVerification.userAuthorizationAccessVerification,
         GlobalErrorHandler.asyncErrorHandler(CourseController.deleteSingleCourse))
+        
     .get(UserVerification.userAuthorizationAccessVerification,
         GlobalErrorHandler.asyncErrorHandler(CourseController.getSingleCourse))
 

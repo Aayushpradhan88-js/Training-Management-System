@@ -12,7 +12,7 @@ class CourseController {
             courseDescription,
             courseDuration,
             courseLevel,
-            //  categoryId
+           category_id
         } = req.body;
         // console.log("✅step 1: All data from the body", courseName, courseDescription,
         //     coursePrice,
@@ -21,13 +21,18 @@ class CourseController {
         //     // categoryId
         // )
 
-        if (!coursePrice || !courseName || !courseDescription || !courseDuration || !courseLevel) {
+        if (!coursePrice || !courseName || !courseDescription || !courseDuration || !courseLevel || !category_id) {
             return res.status(400).json({
                 errorMessage: 'fill all the required fields'
             });
         };
 
         const courseThumbnail = req.file ? req.file.path : null
+        if (!courseThumbnail) {
+            return res.status(400).json({
+                errorMessage: 'please provide course thumbnail'
+            });
+        }
         // console.log('courseThumbnail', courseThumbnail);
 
         const currentInstituteNumber = req.user?.currentInstituteNumber;
@@ -45,11 +50,11 @@ class CourseController {
                 courseDescription, 
                 courseDuration, 
                 courseLevel, 
-                courseThumbnail
-            ) VALUES(?,?,?,?,?,?)`, {
+                courseThumbnail,
+                category_id
+            ) VALUES(?,?,?,?,?,?,?)`, {
             type: QueryTypes.INSERT,
-            replacements: [courseName, coursePrice, courseDescription, courseDuration, courseLevel, courseThumbnail,
-                // categoryId - in qyery add at future
+            replacements: [courseName, coursePrice, courseDescription, courseDuration, courseLevel, courseThumbnail, category_id
             ]
         });
         // console.log({ instertId, affectedRow });
@@ -66,8 +71,9 @@ class CourseController {
             return res.status(400).json({ errorMessage: "Invalid institute number" });
         };
 
+        //Joining course and category
         const fetchedData = await sequelize.query(`
-            SELECT * FROM course_${currentInstituteNumber}
+            SELECT * FROM course_${currentInstituteNumber} JOIN category_${currentInstituteNumber} ON course_${currentInstituteNumber}.category_id = category_${currentInstituteNumber}.id
             `, {
             type: QueryTypes.SELECT
         });
