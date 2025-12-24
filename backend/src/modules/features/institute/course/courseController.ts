@@ -94,6 +94,7 @@ class CourseController {
         if (!currentInstituteNumber || currentInstituteNumber.trim().length === 0) {
             return res.status(400).json({ errorMessage: "Invalid institute number" });
         };
+        
         const singleCourse = await sequelize.query(`
             SELECT * FROM course_${currentInstituteNumber} WHERE id=?`
             , {

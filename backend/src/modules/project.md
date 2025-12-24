@@ -16,9 +16,10 @@
 
 7.✅ Course controller (CRUD) TESTING - Remaining DELETE + SINGLE COURSE
 
-8. Add teacher id and category id at course table located in institute
+8. Add teacher id and ✅ category id at course table located in institute
   controller
 
+9. Write JOIN code when fetching single course with id like getting all course without id build it
 
 # PROJECT REPORT
 
@@ -31,10 +32,17 @@ RULE - BUILD FASTER, SHIP FASTER, SCALE LATER
 3. Completed 
             1a Auth 
               - Routes & Controller (register, login, {logout, forget - future})
+              - Testing CRUD operations 
             2b Institute 
               - ✅ Routes & Controller Overview (CREATE - institute, teacher, student, course, coursetable)
-              - ✅ Database model
+              - ✅ Database model + Table Creation
+              - ✅ Testing CRUD operations 
             3c Course
-              - Routes & Controller (COURSE - create, getall, deletespecific, getspecific ,categoryTable{update - future})
-              - ✅ Database model
+              - Routes & Controller (COURSE - create, getall, deletespecific, getspecific, categoryTable updateSpecific(remained))
+              - ✅ Database model + Table Creation
+              - Testing CRUD operations 
+            4d Teacher
+              - Routes & Controller
+              - Database model + Table Creation
+              - Testing CRUD operations
             
