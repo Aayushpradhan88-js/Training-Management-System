@@ -117,12 +117,12 @@ class InstituteController {
                 teacher_id  VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
                 teacherName VARCHAR(255) NOT NULL, 
                 teacherEmail VARCHAR(255) NOT NULL UNIQUE, 
+                teacherPassword VARCHAR(255),
                 teacherPhoneNumber VARCHAR(255) NOT NULL UNIQUE,
                 teacherExperience VARCHAR(255), 
                 joinedDate DATE, 
                 salary VARCHAR(100),
                 teacherPhoto VARCHAR(255), 
-                teacherPassword VARCHAR(255),
                 courseId VARCHAR(100) REFERENCES course_${instituteNumber}(id),
                 createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
                 updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -189,7 +189,7 @@ class InstituteController {
                     courseDuration VARCHAR(100),
                     courseLevel ENUM('beginner','intermediate','advance') NOT NULL,
                     courseThumbnail VARCHAR(255),
-                    teacher_id VARCHAR(36) NOT NULL REFERENCES teacher_${instituteNumber} (id),
+                    teacher_id VARCHAR(36) NOT NULL REFERENCES teacher_${instituteNumber} ,
                     category_id VARCHAR(36) NOT NULL REFERENCES category_${instituteNumber} (id),
                     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
                     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
