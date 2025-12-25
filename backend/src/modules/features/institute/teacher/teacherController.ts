@@ -23,6 +23,7 @@ class TeacherController {
 
         const teacherPhoto: string = req.file ? req.file.path : "https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4195.jpg?semt=ais_hybrid&w=740&q=80"
 
+        //inserting teacher data with course_id
         const data = await sequelize.query(`
             INSERT INTO  teacher_${currentInstituteNumber}(
                 teacherName,
@@ -41,7 +42,8 @@ class TeacherController {
             ]
         });
 
-        const teacherData: { id: string }[] = await sequelize.query(`
+        //query teacher_id from db
+        const teacherData = await sequelize.query(`
                 SELECT teacher_id FROM teacher_${currentInstituteNumber} WHERE teacherEmail=?
             `, {
             type: QueryTypes.SELECT,
@@ -51,11 +53,12 @@ class TeacherController {
 
         console.log(teacherData, "data");
 
+        //update course_id with teacher_id
         await sequelize.query(`
                 UPDATE course_${currentInstituteNumber} SET teacher_id=? WHERE id=?`,
             {
                 type: QueryTypes.UPDATE,
-                replacements: [teacherData[0]._id, courseId]
+                replacements: [teacherData[0].id, courseId]
             }
         );
 
