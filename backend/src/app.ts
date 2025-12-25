@@ -21,7 +21,7 @@ app.use("/api/institute/course", courseRouter);
 // console.log("✅ step: CATEGORY ROUTER TRIGGERED")
 app.use("/api/institute/category", categoryRoute);
 
-// console.log("✅ step: CATEGORY ROUTER TRIGGERED")
+// console.log("✅ step: TEACHER ROUTER TRIGGERED")
 app.use("/api/institute/teacher", teacherRouter);
 
 export default app;
