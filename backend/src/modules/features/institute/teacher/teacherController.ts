@@ -58,7 +58,7 @@ class TeacherController {
                 UPDATE course_${currentInstituteNumber} SET teacher_id=? WHERE id=?`,
             {
                 type: QueryTypes.UPDATE,
-                replacements: [teacherData[0].id, courseId]
+                replacements: [teacherData, courseId]
             }
         );
 

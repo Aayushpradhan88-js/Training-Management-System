@@ -189,7 +189,7 @@ class InstituteController {
                     courseDuration VARCHAR(100),
                     courseLevel ENUM('beginner','intermediate','advance') NOT NULL,
                     courseThumbnail VARCHAR(255),
-                    teacher_id VARCHAR(36) NOT NULL REFERENCES teacher_${instituteNumber} ,
+                    teacher_id VARCHAR(36) NOT NULL REFERENCES teacher_${instituteNumber} (id),
                     category_id VARCHAR(36) NOT NULL REFERENCES category_${instituteNumber} (id),
                     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
                     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP 
