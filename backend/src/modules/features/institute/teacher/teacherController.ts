@@ -17,32 +17,52 @@ class TeacherController {
         };
 
         const passwordData = generateRandomPasswordService.genereateHashPassword(teacherName);
-        if(!passwordData){
+        if (!passwordData) {
             return res.status(500).json({ errorMessage: "password hashing failed" });
         };
 
-        const teacherPhoto: string = req.file? req.file.path : "https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4195.jpg?semt=ais_hybrid&w=740&q=80"
+        const teacherPhoto: string = req.file ? req.file.path : "https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4195.jpg?semt=ais_hybrid&w=740&q=80"
 
         const data = await sequelize.query(`
-                INSERT TO  teacher_${currentInstituteNumber}(
-                    teacherName,
-                    teacherEmail,
-                    teacherPassword,
-                    teacherPhoneNumber,
-                    teacherExperience,
-                    joinedDate,
-                    salary,
-                    courseId
-                ) VALUES(?,?,?,?,?,?,?,?,?)
-            `, {
+            INSERT INTO  teacher_${currentInstituteNumber}(
+                teacherName,
+                teacherEmail,
+                teacherPassword,
+                teacherPhoneNumber,
+                teacherExperience,
+                joinedDate,
+                salary,
+                teacherPhoto,
+                courseId
+            ) VALUES(?,?,?,?,?,?,?,?,?)`, {
             type: QueryTypes.INSERT,
-            replacements: [teacherName, teacherEmail, (await passwordData).hashPassword, teacherPhoneNumber, teacherExperience, joinedDate, salary, teacherPhoto, courseId]
+            replacements: [
+                teacherName, teacherEmail, (await passwordData).hashPassword, teacherPhoneNumber, teacherExperience, joinedDate, salary, teacherPhoto, courseId
+            ]
         });
+
+        const teacherData: { id: string }[] = await sequelize.query(`
+                SELECT teacher_id FROM teacher_${currentInstituteNumber} WHERE teacherEmail=?
+            `, {
+            type: QueryTypes.SELECT,
+            replacements: [teacherEmail]
+        }
+        );
+
+        console.log(teacherData, "data");
+
+        await sequelize.query(`
+                UPDATE course_${currentInstituteNumber} SET teacher_id=? WHERE id=?`,
+            {
+                type: QueryTypes.UPDATE,
+                replacements: [teacherData[0]._id, courseId]
+            }
+        );
 
         return res.status(200).json({
             datas: data,
             success: true,
-            message:"teacher created successfully"
+            message: "teacher created successfully"
         });
     };
 };

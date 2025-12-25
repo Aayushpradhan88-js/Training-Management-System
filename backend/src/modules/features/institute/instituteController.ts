@@ -114,7 +114,7 @@ class InstituteController {
         try {
             await sequelize.query(`
                CREATE TABLE IF NOT EXISTS teacher_${instituteNumber}(
-                teacher_id  VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+                id  VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
                 teacherName VARCHAR(255) NOT NULL, 
                 teacherEmail VARCHAR(255) NOT NULL UNIQUE, 
                 teacherPassword VARCHAR(255),
@@ -123,7 +123,7 @@ class InstituteController {
                 joinedDate DATE, 
                 salary VARCHAR(100),
                 teacherPhoto VARCHAR(255), 
-                courseId VARCHAR(100) REFERENCES course_${instituteNumber}(id),
+                course_id VARCHAR(100) REFERENCES course_${instituteNumber}(id),
                 createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
                 updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                )
