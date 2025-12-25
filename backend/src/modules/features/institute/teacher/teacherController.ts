@@ -1,7 +1,6 @@
 import { Response } from "express";
 import IExtendedRequest from "../../../global/types/types";
 import sequelize from "../../../../database/connection";
-import { Query } from "mysql2/typings/mysql/lib/protocol/sequences/Query";
 import { QueryTypes } from "sequelize";
 import generateRandomPasswordService from "../../../global/services/generateRandomPassword";
 
@@ -40,12 +39,11 @@ class TeacherController {
             replacements: [teacherName, teacherEmail, (await passwordData).hashPassword, teacherPhoneNumber, teacherExperience, joinedDate, salary, teacherPhoto, courseId]
         });
 
-
         return res.status(200).json({
             datas: data,
             success: true,
             message:"teacher created successfully"
-        })
+        });
     };
 };
 
