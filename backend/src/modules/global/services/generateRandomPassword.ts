@@ -1,5 +1,5 @@
-import { Response } from "express";
-import IExtendedRequest from "../types/types";
+//Random Password Generation Service
+
 import * as bcrypt from 'bcrypt'
 
 class generateRandomPasswordService{
