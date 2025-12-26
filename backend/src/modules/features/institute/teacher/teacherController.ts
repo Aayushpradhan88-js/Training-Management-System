@@ -34,7 +34,7 @@ class TeacherController {
                 joinedDate,
                 salary,
                 teacherPhoto,
-                courseId
+                course_id
             ) VALUES(?,?,?,?,?,?,?,?,?)`, {
             type: QueryTypes.INSERT,
             replacements: [
@@ -44,7 +44,7 @@ class TeacherController {
 
         //query teacher_id from db
         const teacherData = await sequelize.query(`
-                SELECT teacher_id FROM teacher_${currentInstituteNumber} WHERE teacherEmail=?
+                SELECT id FROM teacher_${currentInstituteNumber} WHERE teacherEmail=?
             `, {
             type: QueryTypes.SELECT,
             replacements: [teacherEmail]
@@ -54,13 +54,13 @@ class TeacherController {
         console.log(teacherData, "data");
 
         //update course_id with teacher_id
-        await sequelize.query(`
-                UPDATE course_${currentInstituteNumber} SET teacher_id=? WHERE id=?`,
-            {
-                type: QueryTypes.UPDATE,
-                replacements: [teacherData, courseId]
-            }
-        );
+        // await sequelize.query(`
+        //         UPDATE course_${currentInstituteNumber} SET teacher_id=? WHERE id=?`,
+        //     {
+        //         type: QueryTypes.UPDATE,
+        //         replacements: [teacherData, courseId]
+        //     }
+        // );
 
         return res.status(200).json({
             datas: data,
